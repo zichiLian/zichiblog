@@ -7,7 +7,7 @@ import {getJwtSecretKey} from '@/app/libs/auth'
 //定义登陆端口；
 export async function POST (request: { json: () => any; }){
     const body = await request.json();
-    if (body.username === 'admin'  &&  body.password==='1998'){//如果username等于管理员‘admin’ ，密码也等于，运行以下代码
+    if (body.username === '*****'  &&  body.password==='****'){//如果username等于管理员‘******’ ，密码也等于，运行以下代码
         const token = await new SignJWT({
             username: body.username,
         })
