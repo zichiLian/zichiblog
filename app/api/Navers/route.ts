@@ -13,7 +13,7 @@ async function Navers(
 
     const params = req.method === 'GET' ? Object.fromEntries(req.nextUrl.searchParams.entries()) : await req.json()
     // if (!cacheData) {
-        cacheData = JSON.parse(fs.readFileSync('./storage/Navers.json').toString())
+        cacheData = JSON.parse(fs.readFileSync('./storage/narbar.json').toString())
     // }
     return Response.json({
         data: cacheData

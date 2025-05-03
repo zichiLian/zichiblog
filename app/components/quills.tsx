@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState, forwardRef } from "react";
+import React, {useEffect, useRef, useState, forwardRef} from "react";
 import Quill from "quill";
 import 'quill/dist/quill.snow.css';
-import { ConfigProvider, Space, notification, Button, Modal, FloatButton } from 'antd';
+import {ConfigProvider, Space, notification, Button, Modal, FloatButton} from 'antd';
 import Posttag from "@/app/components/tags";
-import { useAuth } from "@/app/hooks/useAuth";
-import { useRouter } from "next/navigation";
+import {useAuth} from "@/app/hooks/useAuth";
+import {useRouter} from "next/navigation";
 
 // 类型声明扩展
 declare module 'quill' {
@@ -17,7 +17,7 @@ interface EditorProps {
     defaultValue?: any;
 }
 
-const Editor = forwardRef<Quill, EditorProps>(({ defaultValue }, ref) => {
+const Editor = forwardRef<Quill, EditorProps>(({defaultValue}, ref) => {
     const editorRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -26,10 +26,10 @@ const Editor = forwardRef<Quill, EditorProps>(({ defaultValue }, ref) => {
                 theme: 'snow',
                 modules: {
                     toolbar: [
-                        [{ header: [1, 2, 3, false] }],
+                        [{header: [1, 2, 3, false]}],
                         ['bold', 'italic', 'underline'],
                         ['code-block', 'blockquote'],
-                        [{ list: 'ordered' }, { list: 'bullet' }],
+                        [{list: 'ordered'}, {list: 'bullet'}],
                         ['link', 'image'],
                         ['clean']
                     ]
@@ -44,14 +44,18 @@ const Editor = forwardRef<Quill, EditorProps>(({ defaultValue }, ref) => {
         }
     }, [defaultValue, ref]);
 
-    return <div ref={editorRef} />;
+    return <div ref={editorRef}/>;
 });
 
 Editor.displayName = 'Editor';
 
 const Delta = Quill.import('delta');
 
-export default function Draws() {
+interface DrawsProps {
+    savetag?: any[]
+}
+
+export default function Draws({savetag}: DrawsProps) {
     const quillRef = useRef<Quill | null>(null);
     const quilltitle = useRef<HTMLDivElement>(null);
     const [loading, setLoading] = useState(false);
@@ -123,9 +127,9 @@ export default function Draws() {
 
     return (
         <div className="quill">
-            <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
-                {auth && <FloatButton onClick={showModal} />}
-                <FloatButton.BackTop visibilityHeight={0} />
+            <FloatButton.Group shape="circle" style={{insetInlineEnd: 24}}>
+                {auth && <FloatButton onClick={showModal}/>}
+                <FloatButton.BackTop visibilityHeight={0}/>
             </FloatButton.Group>
 
             {contextHolder}
@@ -150,13 +154,13 @@ export default function Draws() {
                     </Button>
                 ]}
             >
-                <Posttag onTagChange={setTags} />
+                <Posttag onTagChange={setTags}/>
 
                 <div
                     ref={quilltitle}
                     contentEditable
                     className="titleput"
-                    dangerouslySetInnerHTML={{ __html: '标题' }}
+                    dangerouslySetInnerHTML={{__html: '标题'}}
                 />
 
                 <Editor

@@ -64,12 +64,12 @@ const TagsPage = () => {
     const uniqueTags = [...new Set(allTags)];//时间去重
 
 
-    function buildTagNetwork(result) {
+    function buildTagNetwork(result: any[]) {
         const network = {};
 
         // 初始化网络
         result.forEach(item => {
-            item.tags.forEach(tag => {
+            item.tags.forEach((tag: string | number) => {
                 if (!network[tag]) {
                     network[tag] = new Set();
                 }
@@ -99,7 +99,7 @@ const TagsPage = () => {
 
     }
 
-    const textid = [];//设置空数组容纳以下数据
+    const textid: any[] = [];//设置空数组容纳以下数据
 
 for (const item of textcontent){
     const articleId = findIdByTitle(item);//用textcontent里对应title文字来获取ID

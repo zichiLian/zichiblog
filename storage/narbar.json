@@ -1,0 +1,8 @@
+[
+  {"id":"1","name":"Links","svg":"links.svg"},
+  {"id":"2","name":"About","svg":"about.svg"},
+  {"id":"3","name":"Archives","svg":"archives.svg"},
+  {"id":"4","name":"Categories","svg":"cate.svg"},
+  {"id":"5","name":"SiteMap","svg":"sitemap.svg"},
+  {"id":"6","name":"RSS","svg":"rss.svg"}
+]

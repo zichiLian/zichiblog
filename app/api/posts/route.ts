@@ -20,6 +20,17 @@ export async function GET(
                 LIMIT 100
             `);
 
+            // let tag : any;
+            // [tag] = await connection.query(`
+            //     SELECT
+            //         id,
+            //         title,
+            //         content,
+            //         DATE_FORMAT(time, '%Y-%m-%d') as formatted_time
+            //     FROM blog.posts
+            //     ORDER BY time DESC
+            //     LIMIT 100
+            // `);
 
 
             // 确保返回标准JSON格式

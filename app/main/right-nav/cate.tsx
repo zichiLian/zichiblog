@@ -86,9 +86,6 @@ export default function GET() {
 
 
 
-
-
-
   return (
     <div className="widget-categories">
     <div className="tags-icon"><img src="../icons/hourglass_empty_24dp_1F1F1F.svg"/></div>
