@@ -59,6 +59,7 @@ const PostTag = (props: { onTagChange: (tags: string[]) => void }) => {
         if (editInputIndex === index) {
             return (
                 <Input
+                    // @ts-ignore
                     ref={editInputRef}
                     key={tag}
                     size="small"
@@ -103,11 +104,13 @@ const PostTag = (props: { onTagChange: (tags: string[]) => void }) => {
         );
     };
 
+
     return (
         <Flex gap="4px 0" wrap>
             {tags.map(renderTag)}
             {inputVisible ? (
                 <Input
+                    // @ts-ignore
                     ref={inputRef}
                     type="text"
                     size="small"
