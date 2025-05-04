@@ -21,6 +21,7 @@ const PostTag = (props: { onTagChange: (tags: string[]) => void }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const editInputRef = useRef<HTMLInputElement>(null);
 
+
     useEffect(() => {
         props.onTagChange(tags);
     }, [tags]);
@@ -103,6 +104,7 @@ const PostTag = (props: { onTagChange: (tags: string[]) => void }) => {
             tagElem
         );
     };
+
 
 
     return (
