@@ -52,7 +52,7 @@ console.log('tags',tags);
     const [insert] = await connection.query(`
             INSERT INTO menu(title, tag)
             VALUES
-                (${title},'${tags}')
+                ('${title}','${tags}')
         `);
 
 
