@@ -50,15 +50,19 @@ const Archives = () => {
     const uniqueTags = [...new Set(allTags)];//时间去重
 
 
-    function buildTagNetwork(result) {
+    function buildTagNetwork(result: any[]) {
     const network = {};
 
     // 初始化网络
     result.forEach(item => {
-        item.tags.forEach(tag => {
+        item.tags.forEach((tag: string | number) => {
+            // @ts-ignore
             if (!network[tag]) {
+
+                // @ts-ignore
                 network[tag] = new Set();
             }
+            // @ts-ignore
             network[tag].add(item.title);
         });
     });
@@ -78,7 +82,8 @@ const Archives = () => {
             <h1>{uniqueYears}</h1>
             <div>CATEGORIES</div>
              {uniqueTags.map((tag, id) => (
-                <a onClick={()=>{console.log(tagNetwork[`${tag}`])}} href={`/tagspage/${tag}`} key={id} className="archives-tags" >
+                <a onClick={()=>{ // @ts-ignore
+                    console.log(tagNetwork[`${tag}`])}} href={`/tagspage/${tag}`} key={id} className="archives-tags" >
                     {tag}
                 </a>))}
         </div>
