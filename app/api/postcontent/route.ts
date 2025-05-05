@@ -49,11 +49,12 @@ console.log('tags',tags);
         `)
     }
 
-    const [insert] = await connection.query(`
-            INSERT INTO menu(title, tag)
+    const [menu] = await connection.query(`
+            INSERT INTO menu(id,title, tag)
             VALUES
-                ('${title}','${tags}')
+                ('${id}','${title}','${tags}')
         `);
+
 
 
 
