@@ -29,22 +29,47 @@ export default function Midwindow() {
         fetchPosts();
     }, []);
 
+
+
+    const splitTags = (str?: string | null): string[] => {
+        if (!str) return [];
+        return str.split(/[｜|]/).map(tag => tag.trim()).filter(Boolean);
+    };
+    //
+    // const splitTags = (
+    //     str: string | null | undefined, // 处理可能空值
+    //     separator: RegExp = /[｜]/ // 分隔符正则
+    // ): string[] => {
+    //     if (!str?.trim()) return []; // 空处理
+    //
+    //     return str
+    //         .split(separator)
+    //         .map(tag => tag.trim())
+    //         .filter((tag): tag is string => tag !== ""); // 类型过滤
+    // };
+
+
+
+
+    // for(let t=0; t<tags.length; t++){
+    //     const post_tag =  splitTags(tags[t].tag)
+    // }
+
     return (
         <div id="fullwindow">
             <div className="container">
                 {posts.map((post, index) => (
                     <div className="book" key={post.id}>
                         <div className="mid-icon">
-              <span>
-                {/* 添加可选链操作符和类型转换 */}
-                  {(tags[index]?.tag || '')
-                      .split('｜')
-                      .map((part: string, i: number) => (
-                          <span key={i} className="tag-part">
-                      {part}
-                    </span>
-                      ))}
-              </span>
+                            {tags
+                                .find(tag => tag.id === post.id) // 根据post.id查找对应tag
+                                ?.tag
+                                .split(/[｜|]/)
+                                .map((part, i) => (
+                                    <span key={i}>
+                                        {part.trim()}
+                                    </span>
+                                ))}
                         </div>
                         <Link href={`/textpage/${post.id}`}>
                             <div className="mid-title">{post.title}</div>

@@ -24,7 +24,8 @@ export async function GET(
             [tag] = await connection.query(`
                 SELECT
                        id,tag
-                FROM blog.menu
+                FROM 
+                       blog.menu
                 LIMIT 100
             `);
 

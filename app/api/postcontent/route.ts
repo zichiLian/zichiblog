@@ -42,15 +42,15 @@ console.log('tags',tags);
 
     for(let i =0 ; i < tag.length; i++) {
         const [tagsInto] = await connection.query(`
-            INSERT INTO tags(name)
-            values ('
-          ${tag[i]}
-          ')
+            INSERT INTO tags(id,name)
+            values (
+            ${id} , '${tag[i]}'
+          )
         `)
     }
 
     const [menu] = await connection.query(`
-            INSERT INTO menu(id,title, tag)
+            INSERT INTO menu(id , title , tag)
             VALUES
                 ('${id}','${title}','${tags}')
         `);
