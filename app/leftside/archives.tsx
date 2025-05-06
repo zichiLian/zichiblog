@@ -1,101 +1,60 @@
 import React, {useEffect, useState} from 'react';
+import Link from "next/link";
 
 const Archives = () => {
 
+    const [time,setTime] = useState();
 
-
-    const [text,setText] = useState([])
     useEffect(() => {
-        fetch('/api/Texts')
-            .then(response =>{if(!response.ok){
-                console.log('请求失败')
-            }
-                return response.json();
-            })
-            .then((response) => {
-                // const data = []
-                setText(response.data);
+        const fetchPosts = async () => {
 
-            })
+            const response = await fetch('/api/time');
+
+            // 检查HTTP状态码
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error?.message || `HTTP错误! 状态码: ${response.status}`);
+
+            }
+
+            const result = await response.json();
+
+            // 数据格式验证
+
+            setTime(result.time);
+
+        };
+
+        fetchPosts();
     }, []);
 
+   console.log(time);
 
 
-    // for (let i =0; i<text.length; i++) {
-    //     const texts = text[i];
-    //     console.log(texts)}
-    const result = text
-        .map((json, index) => {
-            // 1. 将 JSON 字符串转为对象
-            const data = JSON.parse(json);
-
-            // 2. 提取所需字段
-            return {
-                id: data.id,
-                title: data.title,
-                tags: data.tags,
-                time: data.time
-            }
-
-        })
 
 
-    const allTags = result.flatMap(item => item.tags);//选中所有标签
-    const allDate = result.flatMap(item => item.time);//选中所有时间
-    const years = allDate.map(dateTime => dateTime.split('-')[0]);//以 ‘-’连接分割数组前的第1位，选中2025
-    //时间只选中年份
-    const alltitle = result.flatMap(item => item.title);
-
-    const uniqueYears = [...new Set(years)];//标签去重
-    const uniqueTags = [...new Set(allTags)];//时间去重
 
 
-    function buildTagNetwork(result: any[]) {
-    const network = {};
-
-    // 初始化网络
-    result.forEach(item => {
-        item.tags.forEach((tag: string | number) => {
-            // @ts-ignore
-            if (!network[tag]) {
-
-                // @ts-ignore
-                network[tag] = new Set();
-            }
-            // @ts-ignore
-            network[tag].add(item.title);
-        });
-    });
-
-    return network;
-}
-
-
-    const tagNetwork = buildTagNetwork(result);//对应标签元素的所有文章
-
+    // const tagNetwork = buildTagNetwork(result);//对应标签元素的所有文章
+    //
 
 
 
     return (
-        <>
-        <div>
-            <h1>{uniqueYears}</h1>
-            <div>CATEGORIES</div>
-             {uniqueTags.map((tag, id) => (
-                <a onClick={()=>{ // @ts-ignore
-                    console.log(tagNetwork[`${tag}`])}} href={`/tagspage/${tag}`} key={id} className="archives-tags" >
-                    {tag}
-                </a>))}
-        </div>
+            <div className="container">
 
-         <div>
-             {alltitle.map((title, id) => (
-                 <a href={`/textpage/${id+1}`} key={id} className="archives-title">
-                     {title}
-                     <br/></a>))}
-         </div>
+                        <div className="mid-icon">
 
-       </>
+
+                        </div>
+                        <Link href={`/textpage/`}>
+                            <div className="mid-title"></div>
+                        </Link>
+                        <p className="mid-footer">
+
+                        </p>
+
+            </div>
     );
 };
 

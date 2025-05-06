@@ -90,6 +90,7 @@ export default function Navtag() {
     const uniqueTags = [...new Set(allTags)];
 
 
+
     return (
     <div className="widget-Tags">
     <div className="tags-icon"><img src="../icons/archives.svg"/></div>
@@ -99,8 +100,8 @@ export default function Navtag() {
         {/*    <a key={post.number} className="tag" href={`/tagspage/${post.name}`}>*/}
         {/*        {post.name}*/}
         {/*    </a>))}*/}
-        {uniqueTags.map((post)=> (
-            <a className="tag" href={`/tagspage/${post}`}>
+        {uniqueTags.map((post,i)=> (
+            <a className="tag" key={i} href={`/tagspage/${post}`}>
                 {post}
             </a>))}
     </div>

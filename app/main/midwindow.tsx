@@ -55,6 +55,7 @@ export default function Midwindow() {
     //     const post_tag =  splitTags(tags[t].tag)
     // }
 
+
     return (
         <div id="fullwindow">
             <div className="container">

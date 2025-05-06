@@ -44,11 +44,14 @@ async function TAGS(){
             // 使用JSON_EXTRACT确保从MySQL获取有效的JSON
             const [row] = await connection.query(`
             SELECT 
-             number,id,name 
-            FROM tags
-            ORDER BY id DESC    
-                LIMIT 100
+                  number,id,name 
+            FROM 
+                  tags
+            ORDER BY 
+                   id DESC    
+                   LIMIT 100
             `);
+
             // 确保返回标准JSON格式
             return new Response(JSON.stringify({
                 success: true,
