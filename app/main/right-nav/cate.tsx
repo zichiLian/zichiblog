@@ -78,6 +78,7 @@ export default function GET() {
         fetchPosts();
     }, []);
 
+
 //标签去重；
     const allTags = tags.flatMap(item => item.name);
     const uniqueTags = [...new Set(allTags)];
@@ -89,8 +90,8 @@ export default function GET() {
     <div className="tags-icon"><img src="../icons/hourglass_empty_24dp_1F1F1F.svg"/></div>
     <h2 className="right-title">CATEGORIES</h2>
     <div className="tags">
-        {uniqueTags.map((post)=> (
-            <a className="tag" href={`/tagspage/${post}`}>
+        {uniqueTags.map((post,i)=> (
+            <a className="tag" key={i} href={`/tagspage/${post}`}>
                 {post}
             </a>))}
 </div>

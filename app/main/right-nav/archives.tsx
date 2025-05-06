@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react'
 
 
+
 interface Post {
-  id: number;
-  name: string;}
+    time:string|number
+   }
 
 export default function Archives() {
   //
@@ -39,7 +40,7 @@ export default function Archives() {
 
 
 
-  const [tags, setTags] = useState<Post[]>([]);
+  const [title, setTitle] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -52,7 +53,7 @@ export default function Archives() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch('/api/tags');
+        const response = await fetch('/api/time');
 
         // 检查HTTP状态码
         if (!response.ok) {
@@ -65,13 +66,16 @@ export default function Archives() {
 
         // 数据格式验证
 
-        setTags(result.data);
+        setTitle(result.data);
 
     };
 
     fetchPosts();
   }, []);
 
+
+    const times = title.map(item => item.time);
+    const uniqueYears =[...new Set(times)]
 
 
 //时间去重；
@@ -86,7 +90,8 @@ export default function Archives() {
     <div className="tags-icon"><img src="../icons/links.svg"/></div>
     <h2 className="right-title">ARCHIVES</h2>
     <div className="archives-list">
-    <div className="archives-year"><a href={`/leftside/Archives`}>2025</a></div>
+        {uniqueYears.map((item, i) => (
+    <div className="archives-year" key={i}><a href={`/leftside/Archives/`}>{item}</a></div>))}
     </div>
 </div>
   )
