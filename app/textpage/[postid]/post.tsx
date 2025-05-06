@@ -17,6 +17,7 @@ interface Post {
 }
 
 interface Tags{
+    number: React.Key | null | undefined;
     id: number;
     name:string;
 }
@@ -59,7 +60,7 @@ interface Tags{
                 }
 
                 setPosts(result.data);
-
+                setTags(result.tags);
         };
 
 
@@ -96,7 +97,12 @@ interface Tags{
                 <div className="container">
                     {posts.map((post) => (
                         <div className="book" key = {post.id}>
-                            <div className="mid-icon"><span></span><span></span></div>
+                            <div className="mid-icon">
+                                {tags.map((tag) => (
+                                <span key={tag.number}>
+                                    {tag.name}
+                                </span>))}
+                            </div>
                             <div className="mid-title">{post.title}</div>
                             <p className="mid-footer"><span>{post.formatted_time}</span><span></span></p>
                             <div className="textpan">

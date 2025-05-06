@@ -17,7 +17,7 @@ export default function Leftnavbar() {
   };
 
 
-  const createUser = async (userData) => {
+  const createUser = async (userData: any) => {
     const res = await fetch('./api/sql/users', {
       method: 'POST',
       headers: {

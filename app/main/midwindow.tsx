@@ -8,49 +8,68 @@ interface Post {
     formatted_time: string;
 }
 
+interface Tag {
+    id: number;
+    tag: string;
+}
+
 export default function Midwindow() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    // 安全转换类型为数组
-
-    
+    const [tags, setTags] = useState<Tag[]>([]);
 
     useEffect(() => {
         const fetchPosts = async () => {
-            try {
-                setLoading(true);
-                setError(null);
-
-                const response = await fetch('/api/posts');
-
-                // 检查HTTP状态码
-
-                const result = await response.json();
-
-                // 数据格式验证
-                if (!Array.isArray(result?.data)) {
-                    throw new Error('无效的数据格式');
-                }
-
-                setPosts(result.data);
-
-            }  finally {
-                setLoading(false);
-            }
+            const response = await fetch('/api/posts');
+            const result = await response.json();
+            setPosts(result.data);
+            setTags(result.tags as Tag[]); //以防类型错误
         };
-
         fetchPosts();
     }, []);
+
+
+
+    const splitTags = (str?: string | null): string[] => {
+        if (!str) return [];
+        return str.split(/[｜|]/).map(tag => tag.trim()).filter(Boolean);
+    };
+    //
+    // const splitTags = (
+    //     str: string | null | undefined, // 处理可能空值
+    //     separator: RegExp = /[｜]/ // 分隔符正则
+    // ): string[] => {
+    //     if (!str?.trim()) return []; // 空处理
+    //
+    //     return str
+    //         .split(separator)
+    //         .map(tag => tag.trim())
+    //         .filter((tag): tag is string => tag !== ""); // 类型过滤
+    // };
+
+
+
+
+    // for(let t=0; t<tags.length; t++){
+    //     const post_tag =  splitTags(tags[t].tag)
+    // }
 
     return (
         <div id="fullwindow">
             <div className="container">
-                {posts.map((post) => (
+                {posts.map((post, index) => (
                     <div className="book" key={post.id}>
                         <div className="mid-icon">
-
+                            {tags
+                                .find(tag => tag.id === post.id) // 根据post.id查找对应tag
+                                ?.tag
+                                .split(/[｜|]/)
+                                .map((part, i) => (
+                                    <span key={i}>
+                                        {part.trim()}
+                                    </span>
+                                ))}
                         </div>
                         <Link href={`/textpage/${post.id}`}>
                             <div className="mid-title">{post.title}</div>
@@ -62,13 +81,12 @@ export default function Midwindow() {
                 ))}
             </div>
 
-
-                        <div className="page"><span>1</span></div>
-                        <div className="footer">
-                            <h1 className="footer-title">2024-2025 怪猫的博客</h1>
-                            <p className="footer-text">Icons form Google's icons</p>
-                            <p className="footer-text">Build by zichi</p>
-                        </div>
-                    </div>
-        )
-    }
+            <div className="page"><span>1</span></div>
+            <div className="footer">
+                <h1 className="footer-title">2024-2025 怪猫的博客</h1>
+                <p className="footer-text">Icons form Google's icons</p>
+                <p className="footer-text">Build by zichi</p>
+            </div>
+        </div>
+    );
+}

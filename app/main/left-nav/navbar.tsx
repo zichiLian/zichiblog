@@ -22,9 +22,6 @@ export default function Navbar() {
   },
         []);
 
-
-
-
     return (
     <>
     <ul className="info-list" key="{data.id}">

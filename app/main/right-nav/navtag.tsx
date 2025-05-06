@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react'
 
 
 interface Post {
+    number: React.Key | null | undefined;
     id: number;
     name: string;}
 
@@ -85,6 +86,8 @@ export default function Navtag() {
         fetchPosts();
     }, []);
 
+    const allTags = tags.flatMap(item => item.name);
+    const uniqueTags = [...new Set(allTags)];
 
 
     return (
@@ -92,9 +95,13 @@ export default function Navtag() {
     <div className="tags-icon"><img src="../icons/archives.svg"/></div>
     <h2 className="right-title">TAGS</h2>
     <div className="tags">
-        {tags.map((post) => (
-            <a key={post.id} className="tag" href={`/tagspage/${post.name}`}>
-                {post.name}
+        {/*{tags.map((post) => (*/}
+        {/*    <a key={post.number} className="tag" href={`/tagspage/${post.name}`}>*/}
+        {/*        {post.name}*/}
+        {/*    </a>))}*/}
+        {uniqueTags.map((post)=> (
+            <a className="tag" href={`/tagspage/${post}`}>
+                {post}
             </a>))}
     </div>
     </div>

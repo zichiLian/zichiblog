@@ -24,10 +24,22 @@ export async function GET(
                     LIMIT 100
             `);
 
+            const [tags] = await connection.query(`
+            SELECT
+                 number,
+                 id,
+                 name
+            from
+                blog.tags
+            where 
+                 id = ${id}
+            `)
+
             // 确保返回标准JSON格式
             return new Response(JSON.stringify({
                 success: true,
-                data: rows
+                data: rows,
+                tags: tags
             }), {
                 status: 200,
                 headers: {

@@ -20,12 +20,21 @@ export async function GET(
                 LIMIT 100
             `);
 
+            let tag : any;
+            [tag] = await connection.query(`
+                SELECT
+                       id,tag
+                FROM 
+                       blog.menu
+                LIMIT 100
+            `);
 
 
             // 确保返回标准JSON格式
             return new Response(JSON.stringify({
                 success: true,
-                data: rows
+                data: rows,
+                tags:tag
             }), {
                 status: 200,
                 headers: {

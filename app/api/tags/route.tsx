@@ -1,4 +1,3 @@
-import type { NextRequest } from 'next/server'
 import pool from "@/app/db";
 
 //
@@ -45,7 +44,7 @@ async function TAGS(){
             // 使用JSON_EXTRACT确保从MySQL获取有效的JSON
             const [row] = await connection.query(`
             SELECT 
-             id,name 
+             number,id,name 
             FROM tags
             ORDER BY id DESC    
                 LIMIT 100

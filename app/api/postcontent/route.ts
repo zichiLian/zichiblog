@@ -18,14 +18,14 @@ async function postcontent(
 
         // const [postid] = await connection.query(`SELECT MAX(id) FROM posts`)
     let postid: any;
-    [postid] = await connection.query(`SELECT id FROM "posts"`);
+    [postid] = await connection.query(`SELECT id FROM posts`);
 
     let id: number;
-         id = postid.length ;
+         id = postid.length+1 ;
         const title = params.title;
         const content = params.content;
         const tag = params.tags;
-        const tags = tag.join(',');
+        const tags = tag.join('｜');
         const time = params.time;
     //select 和 insert语句中， 这些数值可以帮助我使用where = xxx关键字语句
 
@@ -39,31 +39,34 @@ console.log('tags',tags);
              '${title}','${content}','${time}')
         `);
 
-    const [insert] = await connection.query(`
-            INSERT INTO tie_up(id, name)
+
+    for(let i =0 ; i < tag.length; i++) {
+        const [tagsInto] = await connection.query(`
+            INSERT INTO tags(id,name)
+            values (
+            ${id} , '${tag[i]}'
+          )
+        `)
+    }
+
+    const [menu] = await connection.query(`
+            INSERT INTO menu(id , title , tag)
             VALUES
-                (${id},'${title}')
+                ('${id}','${title}','${tags}')
         `);
 
 
 
-    for(let i =0 ; i < tag.length; i++) {
-        const [tagsInto] = await connection.query(`
-            INSERT INTO tags(name)
-            values ('
-          ${tag[i]}
-          ')
-        `)
-    }
 
 
 
-    const [insertTags] = await connection.query(`
-    UPDATE tie_up  
-    SET type = CONCAT(COALESCE(type, ''), ?)
-    WHERE id = ?`
-        , [tags, id]);
-
+    //
+    // const [insertTags] = await connection.query(`
+    // UPDATE tie_up
+    // SET type = CONCAT(COALESCE(type, ''), ?)
+    // WHERE id = ?`
+    //     , [tags, id]);
+    //
 
     // fs.writeFileSync(`./storage/posts/text${postdata.postNum}.json`, JSON.stringify(str),{flag:'w+'})
 //将获取来的文章内容，创建并写入{文章数量}.json文件。

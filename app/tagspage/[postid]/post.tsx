@@ -2,11 +2,9 @@ import React, {useEffect, useState} from "react";
 
 
 
-// @ts-ignore
-export function Post(params) {
+export function Post(params: { id: any; }) {
 //params.id为当前页面的名字
-    const componentName = params.id
-
+console.log(params);
 
     return (
         <div>
