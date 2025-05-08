@@ -2,12 +2,14 @@
 import pool from '@/app/db'
 
 
-export async function GET(
+export async function Time(
     request: Request,
     { params }: { params: { id: string } }
 ) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
+
+
 
     const connection = await pool.getConnection();
     try {
@@ -33,16 +35,25 @@ export async function GET(
                    time
         `)
 
-
-
-
+        const [posts] = await connection.query(`
+              SELECT
+                   id,
+                   title,
+                   DATE_FORMAT(time, '%Y-%m-%d') as time
+              FROM 
+                   blog.posts
+              where
+                   YEAR(time) = ${id}
+              ORDER BY 
+                   time
+        `)
 
 
         // 确保返回标准JSON格式
         return new Response(JSON.stringify({
             success: true,
             data: rows,
-            time: time
+            time: time,
         }), {
             status: 200,
             headers: {
@@ -55,4 +66,7 @@ export async function GET(
     }
 }
 
-
+export {
+    Time as POST,
+    Time as GET
+}

@@ -6,7 +6,7 @@ import HomePage from "@/app/homepage";
 import React from "react";
 import Links from "@/app/leftside/links";
 import About from "@/app/leftside/about";
-import Archives from "@/app/leftside/archives";
+import Archives from "@/app/archives/[postid]/post";
 import Categories from "@/app/leftside/categories";
 import Rss from "@/app/leftside/rss";
 import Sitemap from "@/app/leftside/sitemap";
@@ -18,6 +18,7 @@ import Draws from "@/app/components/quills";;
 
 export default function TextPage() {
     const {postid} = useParams();
+    const defaultYear = new Date().getFullYear();
 
     if (postid === "Home") {
         return <HomePage/>;//如果postid是home，直接返回主页
@@ -27,14 +28,12 @@ export default function TextPage() {
                 <Leftnavbar/>
                 <div id="fullwindow">
                     <div className="container">
-                        <div className="book">
                             {postid === "Links" && <Links/>}
                             {postid === "About" && <About/>}
-                            {postid === "Archives" && <Archives/>}
+                            {postid === "Archives" && <Archives id={defaultYear}/>}
                             {postid === "Categories" && <Categories/>}
                             {postid === "RSS" && <Rss/>}
                             {postid === "SiteMap" && <Sitemap/>}
-                        </div>
                     </div>
                 </div>
                  <Rightnavbar/>
