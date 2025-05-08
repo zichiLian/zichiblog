@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/hooks/useAuth";
 import React, { useEffect, useState, FormEvent } from "react";
 import { Button, Modal, message } from 'antd';
+import {refreshReducer} from "next/dist/client/components/router-reducer/reducers/refresh-reducer";
 
 interface User {
     id: number;
@@ -11,17 +12,16 @@ interface User {
 
 export default function Login() {
     const [open, setOpen] = useState(false);
-    const [users, setUsers] = useState<User[]>([]);
     const router = useRouter();
     const auth = useAuth();
 
     // 获取用户列表
 
+
     // 表单提交处理
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        try {
             const form = e.currentTarget;
             const formData = new FormData(form);
 
@@ -35,22 +35,15 @@ export default function Login() {
                     password: formData.get('password')
                 })
             });
+             if (res.status != 200) {
+                 alert('账号密码错误，请检查！')
+             } else{
+                 alert('欢迎回来，管理员');
+                 setOpen(false);
+                 window.location.reload()
 
-            if (!res.ok) throw new Error(`登录失败，状态码: ${res.status}`);
+             }
 
-            const { success } = await res.json();
-
-            if (success) {
-                message.success('欢迎回来');
-                setOpen(false);
-                router.push('/');
-            } else {
-                message.error('登录失败，请检查账号和密码');
-            }
-        } catch (error) {
-            console.error('登录请求失败:', error);
-            message.error('网络错误，请稍后重试');
-        }
     };
 
     return (
@@ -96,6 +89,7 @@ export default function Login() {
                             htmlType="submit"
                             type="primary"
                             className='loginBtn'
+
                         >
                             登录
                         </Button>
