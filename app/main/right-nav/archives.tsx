@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-
+import Link from 'next/link';
 
 
 interface Post {
@@ -91,7 +91,7 @@ export default function Archives() {
     <h2 className="right-title">ARCHIVES</h2>
     <div className="archives-list">
         {uniqueYears.map((item, i) => (
-    <div className="archives-year" key={i}><a href={`/leftside/Archives/`}>{item}</a></div>))}
+    <div className="archives-year" key={i}><Link href={`/archives/${item}`}>{item}</Link></div>))}
     </div>
 </div>
   )

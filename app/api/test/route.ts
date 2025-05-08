@@ -1,25 +1,66 @@
-import { NextResponse } from 'next/server';
-import pool from '@/app/db';
 
-export const dynamic = 'force-dynamic';
+import pool from '@/app/db'
 
-export async function GET() {
+
+export async function Time(
+    request: Request,
+    { params }: { params: { id: string } }
+) {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+
+
+    const connection = await pool.getConnection();
     try {
-        // 测试查询
-        const [posts] = await pool.query(`
-      SELECT * FROM user 
-      ORDER BY name DESC 
-    `);
+        // 使用JSON_EXTRACT确保从MySQL获取有效的JSON
 
-        return NextResponse.json({
-            status: 'success',
-            posts: posts || []
+
+        const [posts] = await connection.query(`
+              SELECT
+                   id,
+                   title,
+                   DATE_FORMAT(time, '%Y-%m-%d') as time
+              FROM 
+                   blog.posts
+              where
+                   YEAR(time) = ${id}
+              ORDER BY 
+                   time
+        `)
+
+        const [tags] = await connection.query(`
+                SELECT
+                   t.number , t.id , t.name
+                FROM 
+                    posts p
+                JOIN 
+                    tags t
+                on
+                    p.id = t.id
+                where 
+                    YEAR(p.time) = '${id}'
+                    `);
+
+
+        // 确保返回标准JSON格式
+        return new Response(JSON.stringify({
+            success: true,
+            posts:posts,
+            tags:tags
+        }), {
+            status: 200,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            }
         });
 
-    } catch (error: any) {
-        return NextResponse.json({
-            status: 'error',
-            error: error.message
-        }, { status: 500 });
+    } finally {
+        connection.release();
     }
+}
+
+export {
+    Time as POST,
+    Time as GET
 }
