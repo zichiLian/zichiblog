@@ -6,7 +6,8 @@ import "./globals.css";
 // import Draws from "@/app/components/quills";
 import React from "react";
 import { usePathname } from 'next/navigation';
-
+import Mp3Player from '@/app/components/audio'
+import { PlayerProvider } from '@/app/context/playercontext'
 
 
 
@@ -59,11 +60,12 @@ const geistMono = Outfit({
     >
 
     <div className="box">
-        {/*<Leftnavbar/>*/}
+        <PlayerProvider>
         {children}
-        {/*<Rightnavbar/>*/}
-        {/*<Draws/>*/}
+        <Mp3Player/>
+        </PlayerProvider>
     </div>
+    <Mp3Player/>
     </body>
     </html>
 
