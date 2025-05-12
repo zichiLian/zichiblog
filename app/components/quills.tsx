@@ -88,9 +88,10 @@ export default function Draws({savetag}: DrawsProps) {
                 throw new Error('编辑器未正确初始化');
             }
 
-            const content = quillRef.current.root.innerHTML;
+            const content = quillRef.current.root.innerText;
             const title = quilltitle.current.innerHTML;
             const timenow = new Date();
+            console.log(quillRef);
 
             const postData = {
                 id: 0,
