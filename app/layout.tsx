@@ -6,8 +6,8 @@ import "./globals.css";
 // import Draws from "@/app/components/quills";
 import React from "react";
 import { usePathname } from 'next/navigation';
-import Mp3Player from '@/app/components/audio'
-import { PlayerProvider } from '@/app/context/playercontext'
+import dynamic from "next/dynamic";
+
 
 
 
@@ -22,6 +22,13 @@ const geistMono = Outfit({
   subsets: ["latin"],
 });
 
+const MetingPlayer = dynamic(
+    () => import('@/app/components/metingplayer'),
+    {
+        ssr: false,
+        loading: () => <div className="loading">播放器加载中...</div>
+    }
+)
 
 
     export default function RootLayout({children,}:
@@ -62,10 +69,10 @@ const geistMono = Outfit({
     <div className="box">
         <PlayerProvider>
         {children}
-        <Mp3Player/>
         </PlayerProvider>
     </div>
-    <Mp3Player/>
+    <MetingPlayer />
+
     </body>
     </html>
 
