@@ -15,6 +15,7 @@ export default function MetingPlayer() {
             await Promise.all([
                 loadScript('https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js'),
                 loadScript('https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js')
+
             ])
 
             // 初始化Meting（需要类型断言）
@@ -39,6 +40,7 @@ export default function MetingPlayer() {
         <meting-js
             server="netease"
             type="playlist"
+            list-Folded="false"
             id="13715590902"
             data-lrc-type="3"
             theme="#25b864"
