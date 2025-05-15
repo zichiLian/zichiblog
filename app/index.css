@@ -330,11 +330,12 @@ a{
 }
 
 .ant-float-btn-content{
-    background-color: unset;
+    left:2000px;
 }
 
 .quill{
     position: fixed;
+    z-index: 1;
 }
 
 .titleput{
@@ -456,9 +457,69 @@ a{
     cursor: pointer; /* 如果图片可点击 */
 }
 
-.Aplayer{
-    position: fixed;
-    width: 100%;
-    bottom:0px;
 
+.player-container {
+    position: fixed;
+    bottom: 80px;
+    right:-200px;
+    width: 380px;
+    height: 500px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    opacity: 0;
+}
+
+.player-container.visible {
+    right: 200px;
+    opacity: 1;
+}
+
+.player-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(2px);
+    z-index: 998;
+    display: none;
+}
+
+.player-container.visible .player-mask {
+    display: block;
+}
+
+.player-content {
+    position: relative;
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    overflow: hidden;
+    z-index: 999;
+}
+
+.player-control-button {
+    transition: transform 0.3s ease !important;
+}
+
+.player-control-button:hover {
+    transform: scale(1.1) !important;
+}
+
+@media (max-width: 768px) {
+    .player-container {
+        width: 100vw;
+        height: 70vh;
+        right: -100vw;
+        bottom: 0;
+    }
+
+    .player-container.visible {
+        right: 0;
+    }
+}
+.antButton>ant-float-btn{
+    right:50px;
 }

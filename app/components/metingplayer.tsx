@@ -39,10 +39,10 @@ export default function MetingPlayer() {
         <meting-js
             server="netease"
             type="playlist"
-            id="5185298264"
+            id="13715590902"
             data-lrc-type="3"
             theme="#25b864"
-            className='Aplayer'
+
         />
     )
 }
