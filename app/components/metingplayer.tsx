@@ -42,6 +42,7 @@ export default function MetingPlayer() {
             id="13715590902"
             data-lrc-type="3"
             theme="#25b864"
+
         />
     )
 }
