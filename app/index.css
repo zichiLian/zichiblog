@@ -74,14 +74,13 @@ a{
     display: flex;
     justify-content: start;
     align-items: stretch;
-    position: relative;
-    align-content: stretch; 
-    gap:20px
+    align-content: stretch;
+    position: sticky;
+    gap:20px;
 }
 .left-side .container{
     display: flex;
     justify-content: start;
-    position: sticky;
     height: 100vh;
     top:20px;
 }
@@ -455,4 +454,11 @@ a{
     height: 100px;
     margin-top: 5px;
     cursor: pointer; /* 如果图片可点击 */
+}
+
+.Aplayer{
+    position: fixed;
+    width: 100%;
+    bottom:0px;
+
 }
