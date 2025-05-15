@@ -6,8 +6,8 @@ import "./globals.css";
 // import Draws from "@/app/components/quills";
 import React from "react";
 import { usePathname } from 'next/navigation';
-import { PlayerProvider } from '@/app/context/playercontext'
 import dynamic from "next/dynamic";
+
 
 
 
@@ -72,6 +72,7 @@ const MetingPlayer = dynamic(
         </PlayerProvider>
     </div>
     <MetingPlayer />
+
     </body>
     </html>
 
