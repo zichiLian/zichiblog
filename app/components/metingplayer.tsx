@@ -15,7 +15,6 @@ export default function MetingPlayer() {
             await Promise.all([
                 loadScript('https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js'),
                 loadScript('https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js')
-
             ])
 
             // 初始化Meting（需要类型断言）

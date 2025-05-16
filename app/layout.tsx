@@ -3,15 +3,18 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import React from "react";
 import { usePathname } from 'next/navigation';
+
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { CustomerServiceOutlined, CloseOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 
+
 const geistSans = Outfit({
     variable: "--font-geist-sans",
     subsets: ["latin"],
 });
+
 
 const MetingPlayer = dynamic(
     () => import('@/app/components/metingplayer'),
@@ -21,10 +24,12 @@ const MetingPlayer = dynamic(
     }
 )
 
+
 export default function RootLayout({
                                        children,
                                    }: Readonly<{
     children: React.ReactNode;
+
 }>) {
     const pathname = usePathname();
     const [playerVisible, setPlayerVisible] = useState(false);
@@ -79,8 +84,10 @@ export default function RootLayout({
                 <div className="player-content">
                     <MetingPlayer />
                 </div>
+
             </div>
         )}
+
 
 
         </body>
