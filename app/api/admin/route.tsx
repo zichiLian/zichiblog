@@ -1,11 +1,12 @@
 import {SignJWT} from 'jose'
-import {NextResponse} from 'next/server'
+import {NextResponse, NextRequest} from 'next/server'
 import {getJwtSecretKey} from '@/app/libs/auth'
 
 
 
+
 //定义登陆端口；
-export async function POST (request: { json: () => any; }){
+export async function POST (request:NextRequest){
     const body = await request.json();
     if (body.username === '*****'  &&  body.password==='****'){//如果username等于管理员‘******’ ，密码也等于，运行以下代码
         const token = await new SignJWT({
@@ -28,5 +29,7 @@ export async function POST (request: { json: () => any; }){
         });
         return response;
     }
-    return NextResponse.json({success: false});
+    return NextResponse.json(
+        { success: false, error: "Invalid credentials" },
+        { status: 401 });
 }
