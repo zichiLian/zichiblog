@@ -60,6 +60,7 @@ export default function RootLayout({
         >
         <div className="box">
 
+
                 {children}
         </div>
 
@@ -78,6 +79,7 @@ export default function RootLayout({
             className="player-control-button"
         />
 </div>
+
 
 
         {isMounted && (
