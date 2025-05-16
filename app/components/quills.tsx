@@ -129,7 +129,10 @@ export default function Draws({savetag}: DrawsProps) {
     return (
         <div className="quill">
             <FloatButton.Group shape="circle" style={{insetInlineEnd: 24}}>
-                {auth && <FloatButton onClick={showModal}/>}
+                {auth &&
+                    <FloatButton
+                    onClick={showModal}
+                />}
                 <FloatButton.BackTop visibilityHeight={0}/>
             </FloatButton.Group>
 

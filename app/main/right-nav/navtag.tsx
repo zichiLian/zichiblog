@@ -1,6 +1,6 @@
 'use client'
 import React, {useEffect, useState} from 'react'
-
+import Link from 'next/link';
 
 
 interface Post {
@@ -101,9 +101,9 @@ export default function Navtag() {
         {/*        {post.name}*/}
         {/*    </a>))}*/}
         {uniqueTags.map((post,i)=> (
-            <a className="tag" key={i} href={`/tagspage/${post}`}>
+            <Link  key={i} href={`/tagspage/${post}`} className="tag" >
                 {post}
-            </a>))}
+            </Link>))}
     </div>
     </div>
   )

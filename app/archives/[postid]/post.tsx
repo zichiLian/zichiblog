@@ -14,7 +14,7 @@ interface Post {
 }
 
 interface PostProps {
-    id: number; // 明确声明id属性
+    id: number | string; // 明确声明id属性
 }
 
 interface Tags{

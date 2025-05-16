@@ -1,7 +1,7 @@
 'use client'
 
 import React, {useEffect, useState} from 'react'
-
+import Link from 'next/link';
 
 interface Post {
     number: React.Key | null | undefined;
@@ -91,9 +91,9 @@ export default function GET() {
     <h2 className="right-title">CATEGORIES</h2>
     <div className="tags">
         {uniqueTags.map((post,i)=> (
-            <a className="tag" key={i} href={`/tagspage/${post}`}>
+            <Link className="tag" key={i} href={`/tagspage/${post}`}>
                 {post}
-            </a>))}
+            </Link>))}
 </div>
 </div>
   )
