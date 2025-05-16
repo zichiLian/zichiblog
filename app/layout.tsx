@@ -59,6 +59,7 @@ export default function RootLayout({
             className={`${geistSans.variable} antialiased`}
         >
         <div className="box">
+
                 {children}
         </div>
 
@@ -77,6 +78,7 @@ export default function RootLayout({
             className="player-control-button"
         />
 </div>
+
 
         {isMounted && (
             <div className={`player-container ${playerVisible ? 'visible' : ''}`}>
