@@ -1,26 +1,20 @@
 'use client'
-import { Outfit,Ovo } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
-// import Leftnavbar from "@/app/main/Leftnavbar";
-// import Rightnavbar from "@/app/main/Rightnavbar";
-// import Draws from "@/app/components/quills";
 import React from "react";
 import { usePathname } from 'next/navigation';
-import { PlayerProvider } from '@/app/context/playercontext'
-import dynamic from "next/dynamic";
 
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import { CustomerServiceOutlined, CloseOutlined } from '@ant-design/icons';
+import { FloatButton } from 'antd';
 
 
 const geistSans = Outfit({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+    variable: "--font-geist-sans",
+    subsets: ["latin"],
 });
 
-
-const geistMono = Outfit({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const MetingPlayer = dynamic(
     () => import('@/app/components/metingplayer'),
@@ -31,50 +25,72 @@ const MetingPlayer = dynamic(
 )
 
 
-    export default function RootLayout({children,}:
-    Readonly<{
-  children: React.ReactNode;
+export default function RootLayout({
+                                       children,
+                                   }: Readonly<{
+    children: React.ReactNode;
+
 }>) {
-    // Use a ref to access the quill instance directly
-        const pathname = usePathname();
+    const pathname = usePathname();
+    const [playerVisible, setPlayerVisible] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
 
+    const isErrorPage = pathname === '/404' || pathname === '/500' || pathname.startsWith('/_error');
 
-        const isErrorPage =
-            pathname === '/404' ||
-            pathname === '/500' ||
-            pathname.startsWith('/_error');
+    // 初始化挂载状态
+    React.useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
 
-        if (isErrorPage) {
-            return (
-                <div className="error-layout">
-                    {children}
+    const togglePlayer = () => {
+        setPlayerVisible(prev => !prev);
+    };
+
+    if (isErrorPage) {
+        return <div className="error-layout">{children}</div>;
+    }
+
+    return (
+        <html lang="en">
+        <body
+            style={{ background: "var(--background)" }}
+            className={`${geistSans.variable} antialiased`}
+        >
+        <div className="box">
+            {children}
+        </div>
+
+        <div className='antButton'>
+            <FloatButton
+                shape="circle"
+                type={playerVisible ? 'default' : 'primary'}
+                style={{
+                    right: 24,
+                    bottom:100,
+                    transform: `scale(${playerVisible ? 0.9 : 1})`,
+                    transition: 'all 0.3s ease'
+                }}
+                icon={playerVisible ? <CloseOutlined /> : <CustomerServiceOutlined />}
+                onClick={togglePlayer}
+                className="player-control-button"
+            />
+        </div>
+
+        {isMounted && (
+            <div className={`player-container ${playerVisible ? 'visible' : ''}`}>
+                <div className="player-mask" onClick={togglePlayer} />
+                <div className="player-content">
+                    <MetingPlayer />
                 </div>
-            );
-        }
+
+            </div>
+        )}
 
 
-        return (
 
-    <html lang="en">
-
-    <body
-        style={{
-            background: "var(--background)",//设置背景颜色为变量
-        }}
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-    >
-
-    <div className="box">
-        <PlayerProvider>
-        {children}
-        </PlayerProvider>
-    </div>
-    <MetingPlayer />
-    </body>
-    </html>
-
-  );
-
+        </body>
+        </html>
+    );
 }

@@ -1,8 +1,8 @@
 *{
-        margin:0;
-        padding: 0;
-        font-size: 14px;
-        justify-content: center;
+    margin:0;
+    padding: 0;
+    font-size: 14px;
+    justify-content: center;
 }
 
 .light{
@@ -35,30 +35,30 @@ button {
     border-width: 0px;
 
 }
-    
+
 ol,ul{
-        list-style-type:none;/*列表上标识去除*/
+    list-style-type:none;/*列表上标识去除*/
 }
-    
+
 a{
-        color:#666;
-        text-decoration: none;/*超链接下划线去除*/
+    color:#666;
+    text-decoration: none;/*超链接下划线去除*/
 }
 
 .box{
-   display:flex;
-   justify-content: center;
-   align-content:stretch;
-   justify-items:stretch;
-   gap:60px;
-   padding-top: 50px;
+    display:flex;
+    justify-content: center;
+    align-content:stretch;
+    justify-items:stretch;
+    gap:60px;
+    padding-top: 50px;
     flex-wrap: wrap;
 }
 
 
 .container{
     display:flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-content: stretch;
     align-items: stretch;
     /* border:1px solid black; */
@@ -129,7 +129,7 @@ a{
     margin-bottom:10px;
     font-size:16px;
     color:#666;
-    flex-wrap: wrap;    
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: start;
 }
@@ -152,18 +152,18 @@ a{
 }
 
 .info-list>li{
-   line-height: 20px    ;
-   font-size: 18px;
-   vertical-align: middle;
-   color:#bababa;
-   display: flex;
-   justify-content: flex-start;
+    line-height: 20px    ;
+    font-size: 18px;
+    vertical-align: middle;
+    color:#bababa;
+    display: flex;
+    justify-content: flex-start;
 }
 
 /*中间部分*/
 #fullwindow{
     align-items:center;
-    text-align: center; 
+    text-align: center;
     flex-direction: column;
 }
 
@@ -215,7 +215,7 @@ a{
 .page>span{
     padding:16px 32px;
     font-weight: 700;
-    font-size:18px; 
+    font-size:18px;
 }
 
 .footer{
@@ -290,15 +290,15 @@ a{
 }
 
 .archives-list{
-   display: flex;
-   flex-direction: column;
-   align-self:flex-start;
-   background-color: white;
-   border-radius: 5px;
-   gap:10px;
-   padding:18px 25px;
-   border-bottom:5px solid #f5f5fa;
-   margin:-3px;
+    display: flex;
+    flex-direction: column;
+    align-self:flex-start;
+    background-color: white;
+    border-radius: 5px;
+    gap:10px;
+    padding:18px 25px;
+    border-bottom:5px solid #f5f5fa;
+    margin:-3px;
 }
 
 .archives-list>div{
@@ -308,12 +308,12 @@ a{
 }
 
 .tags{
-     display: flex;
-     flex-direction: row;
-     justify-content: start;
-     gap:10px;
-     width:380px;
-     flex-wrap:wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap:10px;
+    width:380px;
+    flex-wrap:wrap;
 }
 
 .fade{
@@ -330,11 +330,12 @@ a{
 }
 
 .ant-float-btn-content{
-    background-color: unset;
+    left:2000px;
 }
 
 .quill{
     position: fixed;
+    z-index: 1;
 }
 
 .titleput{
@@ -456,9 +457,70 @@ a{
     cursor: pointer; /* 如果图片可点击 */
 }
 
-.Aplayer{
-    position: fixed;
-    width: 100%;
-    bottom:0px;
 
+.player-container {
+    position: fixed;
+    bottom: 80px;
+    right:-200px;
+    width: 380px;
+    height: 500px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    opacity: 0;
 }
+
+.player-container.visible {
+    right: 200px;
+    opacity: 1;
+}
+
+.player-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(2px);
+    z-index: 998;
+    display: none;
+}
+
+.player-container.visible .player-mask {
+    display: block;
+}
+
+.player-content {
+    position: relative;
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    overflow: hidden;
+    z-index: 999;
+}
+
+.player-control-button {
+    transition: transform 0.3s ease !important;
+}
+
+.player-control-button:hover {
+    transform: scale(1.1) !important;
+}
+
+@media (max-width: 768px) {
+    .player-container {
+        width: 100vw;
+        height: 70vh;
+        right: -100vw;
+        bottom: 0;
+    }
+
+    .player-container.visible {
+        right: 0;
+    }
+}
+.antButton>ant-float-btn{
+    right:50px;
+}
+

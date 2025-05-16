@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect } from 'react'
 
 export default function MetingPlayer() {
@@ -39,10 +38,11 @@ export default function MetingPlayer() {
         <meting-js
             server="netease"
             type="playlist"
-            id="5185298264"
+            list-Folded="false"
+            id="13715590902"
             data-lrc-type="3"
             theme="#25b864"
-            className='Aplayer'
+
         />
     )
 }
