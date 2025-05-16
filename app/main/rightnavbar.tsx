@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Archives from './right-nav/archives'
 import Cate from './right-nav/cate'
 import Navtag from "./right-nav/navtag"
-import Search from './right-nav/search'
+import Notice from './right-nav/notice'
 
 
 export default function Rightnavbar() {
@@ -47,7 +47,7 @@ export default function Rightnavbar() {
     <>
     <div id ="right-side">
   <div className="container">
-      <Search/>
+      <Notice/>
       <Archives/>
       <Cate/>
       <Navtag/>

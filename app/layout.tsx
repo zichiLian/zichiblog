@@ -59,24 +59,28 @@ export default function RootLayout({
             className={`${geistSans.variable} antialiased`}
         >
         <div className="box">
-            {children}
+
+
+                {children}
         </div>
 
-        <div className='antButton'>
-            <FloatButton
-                shape="circle"
-                type={playerVisible ? 'default' : 'primary'}
-                style={{
-                    right: 24,
-                    bottom:100,
-                    transform: `scale(${playerVisible ? 0.9 : 1})`,
-                    transition: 'all 0.3s ease'
-                }}
-                icon={playerVisible ? <CloseOutlined /> : <CustomerServiceOutlined />}
-                onClick={togglePlayer}
-                className="player-control-button"
-            />
-        </div>
+<div className='antButton'>
+        <FloatButton
+            shape="circle"
+            type={playerVisible ? 'default' : 'primary'}
+            style={{
+                right: 24,
+                bottom:100,
+                transform: `scale(${playerVisible ? 0.9 : 1})`,
+                transition: 'all 0.3s ease'
+            }}
+            icon={playerVisible ? <CloseOutlined /> : <CustomerServiceOutlined />}
+            onClick={togglePlayer}
+            className="player-control-button"
+        />
+</div>
+
+
 
         {isMounted && (
             <div className={`player-container ${playerVisible ? 'visible' : ''}`}>

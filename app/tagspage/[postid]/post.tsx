@@ -34,7 +34,7 @@ export function Post(params) {
 
         const fetchPosts = async () => {
 
-            const response = await fetch(`/api/tagspage?id=${postid}`);
+            const response = await fetch(`/api/tagspage?id=${postid}`   );
 
             // 检查HTTP状态码
             if (!response.ok) {
