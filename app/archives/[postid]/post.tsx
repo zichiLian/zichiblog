@@ -50,7 +50,6 @@ const Post = ({ id }: PostProps) => {
             }
 
             const result = await response.json();
-
             // 数据格式验证
 
             setTime(result.data);
