@@ -1,53 +1,56 @@
-
 import pool from '@/app/db'
-import {NextRequest} from "next/server";
+import { NextRequest } from "next/server";
 
-
-export async function Time(
-    req: NextRequest
-) {
+async function handleRequest(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
 
-
+    // 参数验证
+    if (!id) {
+        return new Response(JSON.stringify({
+            success: false,
+            message: 'Missing id parameter'
+        }), {
+            status: 400,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+    }
 
     const connection = await pool.getConnection();
     try {
-        // 使用JSON_EXTRACT确保从MySQL获取有效的JSON
-
-
+        // 使用参数化查询防止SQL注入
         const [posts] = await connection.query(`
-              SELECT
-                   id,
-                   title,
-                   DATE_FORMAT(time, '%Y-%m-%d') as time
-              FROM 
-                   blog.posts
-              where
-                   YEAR(time) = ${id}
-              ORDER BY 
-                   time
-        `)
+            SELECT
+                id,
+                title,
+                DATE_FORMAT(time, '%Y-%m-%d') as time
+            FROM 
+                blog.posts
+            WHERE
+                YEAR(time) = ?
+            ORDER BY 
+                time
+        `, [id]);
 
         const [tags] = await connection.query(`
-                SELECT
-                   t.number , t.id , t.name
-                FROM 
-                    posts p
-                JOIN 
-                    tags t
-                on
-                    p.id = t.id
-                where 
-                    YEAR(p.time) = '${id}'
-                    `);
+            SELECT
+                t.number, t.id, t.name
+            FROM 
+                posts p
+            JOIN 
+                tags t
+            ON
+                p.id = t.id
+            WHERE 
+                YEAR(p.time) = ?
+        `, [id]);
 
-
-        // 确保返回标准JSON格式
         return new Response(JSON.stringify({
             success: true,
-            posts:posts,
-            tags:tags
+            posts: posts,
+            tags: tags
         }), {
             status: 200,
             headers: {
@@ -55,12 +58,26 @@ export async function Time(
             }
         });
 
+    } catch (error) {
+        console.error(error);
+        return new Response(JSON.stringify({
+            success: false,
+            message: 'Internal server error'
+        }), {
+            status: 500,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
     } finally {
         connection.release();
     }
 }
 
-export {
-    Time as POST,
-    Time as GET
+export async function GET(req: NextRequest) {
+    return handleRequest(req);
+}
+
+export async function POST(req: NextRequest) {
+    return handleRequest(req);
 }
