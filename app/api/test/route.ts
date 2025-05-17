@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
             const [posts, tags] = await Promise.all([
                 connection.query(
                     `SELECT id, title, DATE_FORMAT(time, '%Y-%m-%d') as time
-           FROM blog.posts
+           FROM posts
            WHERE YEAR(time) = ?
            ORDER BY time`,
                     [year]

@@ -15,7 +15,7 @@ export async function GET(
                     title,
                     content,
                     DATE_FORMAT(time, '%Y-%m-%d') as formatted_time
-                FROM blog.posts
+                FROM posts
                 ORDER BY time DESC
                 LIMIT 100
             `);
@@ -25,7 +25,7 @@ export async function GET(
                 SELECT
                        id,tag
                 FROM 
-                       blog.menu
+                       menu
                 LIMIT 100
             `);
 

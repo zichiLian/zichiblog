@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
         try {
             const [rows] = await connection.query(`
         SELECT DATE_FORMAT(time, '%Y') as time
-        FROM blog.posts
+        FROM posts
         ORDER BY time 
         LIMIT 100
       `)
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
           id,
           title,
           DATE_FORMAT(time, '%Y-%m-%d') as time
-        FROM blog.posts
+        FROM posts
         ORDER BY time
       `)
 
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
           id,
           title,
           DATE_FORMAT(time, '%Y-%m-%d') as time
-        FROM blog.posts
+        FROM posts
         WHERE YEAR(time) = ${id}
         ORDER BY time
       `) : [[]]

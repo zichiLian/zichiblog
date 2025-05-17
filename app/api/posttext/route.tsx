@@ -17,7 +17,7 @@ export async function GET(
                     title,
                     content,
                     DATE_FORMAT(time, '%Y-%m-%d') as formatted_time
-                FROM blog.posts
+                FROM posts
                 where id = ${id}
                 ORDER BY time DESC
                     LIMIT 100
@@ -29,7 +29,7 @@ export async function GET(
                  id,
                  name
             from
-                blog.tags
+                tags
             where 
                  id = ${id}
             `)
