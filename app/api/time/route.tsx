@@ -1,12 +1,12 @@
 
 import pool from '@/app/db'
-import {NextRequest} from "next/server";
 
 
 export async function Time(
-    req: NextRequest
+    request: Request,
+    { params }: { params: { id: string } }
 ) {
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
 

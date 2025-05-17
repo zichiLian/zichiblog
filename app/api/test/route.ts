@@ -1,83 +1,58 @@
 import pool from '@/app/db'
-import { NextRequest } from "next/server";
+import { NextResponse } from 'next/server'
 
-async function handleRequest(req: NextRequest) {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get('id');
+export async function Time(
+    request: Request,
+    context: { params?: Record<string, string> } // 修复1：将params改为可选
+) {
 
-    // 参数验证
-    if (!id) {
-        return new Response(JSON.stringify({
-            success: false,
-            message: 'Missing id parameter'
-        }), {
-            status: 400,
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
+    const rawId = context.params?.id ||
+        new URL(request.url).searchParams.get('id') ||
+        ''
+    const id = String(rawId).trim()
+
+
+    if (!id || !/^\d{4}$/.test(id)) {
+        return NextResponse.json(
+            { success: false, message: '请提供有效的年份参数（YYYY格式）' },
+            { status: 400 }
+        )
     }
 
-    const connection = await pool.getConnection();
+    const connection = await pool.getConnection()
     try {
-        // 使用参数化查询防止SQL注入
-        const [posts] = await connection.query(`
-            SELECT
-                id,
-                title,
-                DATE_FORMAT(time, '%Y-%m-%d') as time
-            FROM 
-                blog.posts
-            WHERE
-                YEAR(time) = ?
-            ORDER BY 
-                time
-        `, [id]);
+        const [posts, tags] = await Promise.all([
+            connection.query(
+                `SELECT id, title, DATE_FORMAT(time, '%Y-%m-%d') as time
+         FROM blog.posts
+         WHERE YEAR(time) = ?
+         ORDER BY time`,
+                [id]
+            ),
+            connection.query(
+                `SELECT t.number, t.id, t.name
+         FROM posts p
+         JOIN tags t ON p.id = t.id
+         WHERE YEAR(p.time) = ?`,
+                [id]
+            )
+        ])
 
-        const [tags] = await connection.query(`
-            SELECT
-                t.number, t.id, t.name
-            FROM 
-                posts p
-            JOIN 
-                tags t
-            ON
-                p.id = t.id
-            WHERE 
-                YEAR(p.time) = ?
-        `, [id]);
-
-        return new Response(JSON.stringify({
+        return NextResponse.json({
             success: true,
-            posts: posts,
-            tags: tags
-        }), {
-            status: 200,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-            }
-        });
+            posts: posts[0],
+            tags: tags[0]
+        })
 
     } catch (error) {
-        console.error(error);
-        return new Response(JSON.stringify({
-            success: false,
-            message: 'Internal server error'
-        }), {
-            status: 500,
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
+        console.error('[API Error]', error)
+        return NextResponse.json(
+            { success: false, message: '服务器内部错误' },
+            { status: 500 }
+        )
     } finally {
-        connection.release();
+        connection.release()
     }
 }
 
-export async function GET(req: NextRequest) {
-    return handleRequest(req);
-}
-
-export async function POST(req: NextRequest) {
-    return handleRequest(req);
-}
+export { Time as GET,Time as POST }
