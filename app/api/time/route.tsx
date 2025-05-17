@@ -1,72 +1,65 @@
-
 import pool from '@/app/db'
+import { NextRequest, NextResponse } from 'next/server'
 
-
-export async function Time(
-    request: Request,
-    { params }: { params: { id: string } }
-) {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
-
-
-
-    const connection = await pool.getConnection();
+export async function GET(request: NextRequest) {
     try {
-        // 使用JSON_EXTRACT确保从MySQL获取有效的JSON
-        const [rows] = await connection.query(`
-                SELECT
-                    DATE_FORMAT(time, '%Y') as time
-                FROM 
-                     blog.posts
-                ORDER BY 
-                     time 
-                    LIMIT 100
-            `);
+        const { searchParams } = new URL(request.url)
+        const id = searchParams.get('id')
 
-        const [time] = await connection.query(`
-              SELECT
-                   id,
-                   title,
-                   DATE_FORMAT(time, '%Y-%m-%d') as time
-              FROM 
-                   blog.posts
-              ORDER BY 
-                   time
-        `)
+        const connection = await pool.getConnection()
+        try {
+            const [rows] = await connection.query(`
+        SELECT DATE_FORMAT(time, '%Y') as time
+        FROM blog.posts
+        ORDER BY time 
+        LIMIT 100
+      `)
 
-        const [posts] = await connection.query(`
-              SELECT
-                   id,
-                   title,
-                   DATE_FORMAT(time, '%Y-%m-%d') as time
-              FROM 
-                   blog.posts
-              where
-                   YEAR(time) = ${id}
-              ORDER BY 
-                   time
-        `)
+            const [time] = await connection.query(`
+        SELECT
+          id,
+          title,
+          DATE_FORMAT(time, '%Y-%m-%d') as time
+        FROM blog.posts
+        ORDER BY time
+      `)
+
+            const [posts] = id ? await connection.query(`
+        SELECT
+          id,
+          title,
+          DATE_FORMAT(time, '%Y-%m-%d') as time
+        FROM blog.posts
+        WHERE YEAR(time) = ${id}
+        ORDER BY time
+      `) : [[]]
 
 
-        // 确保返回标准JSON格式
-        return new Response(JSON.stringify({
-            success: true,
-            data: rows,
-            time: time,
-        }), {
-            status: 200,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-            }
-        });
+            return NextResponse.json({
+                success: true,
+                data: rows,
+                time: time,
+                // @ts-ignore
+                posts: posts?.[0] || []
+            })
 
-    } finally {
-        connection.release();
+        } finally {
+            connection.release()
+        }
+
+    } catch (error) {
+        console.error('Error in /api/time:', error)
+        return NextResponse.json(
+            { success: false, message: 'Internal Server Error' },
+            { status: 500 }
+        )
     }
 }
 
-export {
-    Time as POST,
-    Time as GET
+
+export async function POST(request: NextRequest) {
+    return NextResponse.json(
+        { success: false, message: 'Method not allowed' },
+        { status: 405 }
+    )
 }
