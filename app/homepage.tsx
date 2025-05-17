@@ -3,7 +3,7 @@ import Midwindow from './main/midwindow'
 import React, {useEffect} from "react";
 import Rightnavbar from "@/app/main/rightnavbar";
 import Leftnavbar from "@/app/main/leftnavbar";
-import Draws from "@/app/components/quills";
+
 
 export  default function HomePage() {
     useEffect(() => {
@@ -16,7 +16,6 @@ export  default function HomePage() {
        <Leftnavbar/>
        <Midwindow/>
        <Rightnavbar/>
-       <Draws/>
    </>
   );
 }

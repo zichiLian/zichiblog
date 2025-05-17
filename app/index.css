@@ -77,6 +77,7 @@ a{
     align-content: stretch;
     position: sticky;
     gap:20px;
+
 }
 .left-side .container{
     display: flex;

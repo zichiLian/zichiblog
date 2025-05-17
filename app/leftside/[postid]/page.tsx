@@ -9,7 +9,6 @@ import About from "@/app/leftside/about";
 import Archives from "@/app/archives/[postid]/post";
 import Categories from "@/app/leftside/categories";
 import Rss from "@/app/leftside/rss";
-import Sitemap from "@/app/leftside/sitemap";
 import Leftnavbar from "@/app/main/leftnavbar"
 import Rightnavbar from "@/app/main/rightnavbar";;
 import Draws from "@/app/components/quills";;
@@ -33,7 +32,6 @@ export default function TextPage() {
                             {postid === "Archives" && <Archives id={defaultYear}/>}
                             {postid === "Categories" && <Categories/>}
                             {postid === "RSS" && <Rss/>}
-                            {postid === "SiteMap" && <Sitemap/>}
                     </div>
                 </div>
                  <Rightnavbar/>
