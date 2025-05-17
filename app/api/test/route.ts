@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 export async function Time(
     request: Request,
-    context: { params?: Record<string, string> } // 修复1：将params改为可选
+    context: { params?: Record<string, string> }
 ) {
 
     const rawId = context.params?.id ||
@@ -21,21 +21,30 @@ export async function Time(
 
     const connection = await pool.getConnection()
     try {
+
         const [posts, tags] = await Promise.all([
-            connection.query(
-                `SELECT id, title, DATE_FORMAT(time, '%Y-%m-%d') as time
-         FROM blog.posts
-         WHERE YEAR(time) = ?
-         ORDER BY time`,
-                [id]
-            ),
-            connection.query(
-                `SELECT t.number, t.id, t.name
-         FROM posts p
-         JOIN tags t ON p.id = t.id
-         WHERE YEAR(p.time) = ?`,
-                [id]
-            )
+            connection.query(`
+        SELECT 
+          id, 
+          title, 
+          DATE_FORMAT(time, '%Y-%m-%d') as time
+        FROM 
+          blog.posts
+        WHERE
+          YEAR(time) = ${id}
+        ORDER BY 
+          time
+      `),
+            connection.query(`
+        SELECT
+          t.number, t.id, t.name
+        FROM 
+          posts p
+        JOIN 
+          tags t ON p.id = t.id
+        WHERE 
+          YEAR(p.time) = '${id}'
+      `)
         ])
 
         return NextResponse.json({
@@ -55,4 +64,5 @@ export async function Time(
     }
 }
 
-export { Time as GET,Time as POST }
+
+export { Time as GET, Time as POST }
