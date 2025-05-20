@@ -2,7 +2,7 @@ import {jwtVerify} from "jose";
 
 export function getJwtSecretKey() {
     //验证令牌逻辑；
-    const secret = process.env.NEXT_PUBLIC_JWT_SECRET_KEY;
+    const secret = process.env.JWT_SECRET_KEY;
     //.env文件夹里的属性
     if(!secret) {
         throw new Error('Missing JWT secret key');
