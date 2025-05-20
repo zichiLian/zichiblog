@@ -1,54 +1,51 @@
 'use client'
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/hooks/useAuth";
-import React, { useEffect, useState, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import { Button, Modal, message } from 'antd';
-import {refreshReducer} from "next/dist/client/components/router-reducer/reducers/refresh-reducer";
-
-interface User {
-    id: number;
-    name: string;
-}
 
 export default function Login() {
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const auth = useAuth();
+    const { isAdmin, isLoading } = useAuth();
 
-    // 获取用户列表
-
-
-    // 表单提交处理
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);
 
-            const form = e.currentTarget;
-            const formData = new FormData(form);
-
-            const res = await fetch('/api/admin', {
+        try {
+            const formData = new FormData(e.currentTarget);
+            const response = await fetch('/api/admin', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     username: formData.get('username'),
                     password: formData.get('password')
                 })
             });
-             if (res.status != 200) {
-                 alert('账号密码错误，请检查！')
-             } else{
-                 alert('欢迎回来，管理员');
-                 setOpen(false);
-                 window.location.reload()
 
-             }
+            const result = await response.json();
 
+            if (response.ok) {
+                alert('欢迎回来，管理员')
+                setOpen(false);
+                router.refresh();
+            } else {
+                message.error(result.error || '登录失败');
+            }
+        } catch (error) {
+            message.error('请求失败');
+        } finally {
+            setLoading(false);
+        }
     };
+
+    if (isLoading) return <div>加载中...</div>;
 
     return (
         <div className='Logining'>
-            {auth ? (
+            {isAdmin ? (
                 <p>以管理员身份浏览中</p>
             ) : (
                 <Button onClick={() => setOpen(true)} className='login'>

@@ -1,35 +1,44 @@
-    import {SignJWT} from 'jose'
-    import {NextResponse, NextRequest} from 'next/server'
-    import {getJwtSecretKey} from '@/app/libs/auth'
+import { NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
+import { generateToken } from '@/app/libs/auth';
 
+export async function POST(request: NextRequest) {
+    try {
+        const { username, password } = await request.json();
 
+        // 验证环境变量
+        if (!process.env.ADMIN_USERNAME || !process.env.ADMIN_PASSWORD) {
+            throw new Error('Admin credentials not configured');
+        }
 
+        // 验证凭证
+        if (username === process.env.ADMIN_USERNAME &&
+            password === process.env.ADMIN_PASSWORD) {
 
-    //定义登陆端口；
-    export async function POST (request:NextRequest){
-        const body = await request.json();
-        if (body.username === '*****'  &&  body.password==='****'){//如果username等于管理员‘******’ ，密码也等于，运行以下代码
-            const token = await new SignJWT({
-                username: body.username,
-            })
-                .setProtectedHeader({alg: 'HS256'})
-                .setIssuedAt()
-                .setExpirationTime('10000s')
-                .sign(getJwtSecretKey());
-            //以上为加密方式设置为HS256，持续时间为30s
-            const response = NextResponse.json(
-                {success: true,},
-                {status:200, headers:{'content-type':'application/json'}}
-            ); //如果请求成功，则返回这些数据，且在cookies里给予token钥匙
+            const token = await generateToken({ username });
+            const response = NextResponse.json({ success: true });
+
             response.cookies.set({
-                name:'token',
-                value:token,
-                path:'/'
-
+                name: 'token',
+                value: token,
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 60 * 60 * 2, // 2小时
+                path: '/',
+                sameSite: 'strict'
             });
+
             return response;
         }
+
         return NextResponse.json(
-            { success: false, error: "Invalid credentials" },
-            { status: 401 });
+            { success: false, error: 'Invalid credentials' },
+            { status: 401 }
+        );
+    } catch (error) {
+        return NextResponse.json(
+            { success: false, error: 'Internal server error' },
+            { status: 500 }
+        );
     }
+}
