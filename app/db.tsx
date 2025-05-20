@@ -16,7 +16,7 @@ function getConfig() {
 const config = getConfig();
 
 const pool = mysql.createPool({
-    host: config.host, // Docker服务名
+        host: config.host,
     user: config.user,
     password: config.password,
     database: config.database,
