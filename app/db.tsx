@@ -21,7 +21,7 @@ async function testConnection() {
         console.log('✅ 数据库连接成功');
         conn.release();
     } catch (err) {
-        console.error('❌ 数据库连接失败:', err.message);
+        console.error('❌ 数据库连接失败:');
         if (retryCount < MAX_RETRIES) {
             retryCount++;
             setTimeout(testConnection, 5000);
