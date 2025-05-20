@@ -43,9 +43,6 @@ const pool = mysql.createPool({
     connectionLimit: 15,
     connectTimeout: 60000, // 连接超时10秒
     idleTimeout: 30000,    // 空闲超时30秒
-    ssl: {
-      rejectUnauthorized: true
-     },
     queueLimit: 0,
     timezone: '+08:00',
     charset: 'utf8mb4_unicode_ci'
