@@ -12,6 +12,25 @@ function getConfig() {
     }
 }
 
+let retryCount = 0;
+const MAX_RETRIES = 3;
+
+async function testConnection() {
+    try {
+        const conn = await pool.getConnection();
+        console.log('✅ 数据库连接成功');
+        conn.release();
+    } catch (err) {
+        console.error('❌ 数据库连接失败:', err.message);
+        if (retryCount < MAX_RETRIES) {
+            retryCount++;
+            setTimeout(testConnection, 5000);
+        }
+    }
+}
+
+// 启动时立即测试连接
+testConnection();//错误处理
 
 const config = getConfig();
 
@@ -21,19 +40,20 @@ const pool = mysql.createPool({
     password: config.password,
     database: config.database,
     waitForConnections: true,
-    connectionLimit: 500,
+    connectionLimit: 15,
     connectTimeout: 60000, // 连接超时10秒
     idleTimeout: 30000,    // 空闲超时30秒
+    ssl: {
+      rejectUnauthorized: true
+     },
     queueLimit: 0,
     timezone: '+08:00',
     charset: 'utf8mb4_unicode_ci'
 });
 
-// 增强心跳机制（每25秒发送一次）
 setInterval(() => {
     pool.query('SELECT 1')
-        .then(() => console.log( new Date()))
-        .catch(err => console.error('Failed:', err.message));
-},1000000);
+        .catch(err => console.error('数据库心跳失败:', err.message));
+}, 25 * 1000);
 
 export default pool;
