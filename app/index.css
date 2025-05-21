@@ -5,12 +5,13 @@
     justify-content: center;
 }
 
+
 .light{
-    background-color: #f5f5fa;
+    background-color: #e5e5ea;
 }
 
 .dark{
-    background-color: #8c8c8c;
+    background-color: #e5e5ea;
 }
 
 input.keyword{
@@ -129,7 +130,7 @@ a{
     display: flex;
     margin-bottom:10px;
     font-size:16px;
-    color:#666;
+    color: var(--foreground);
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: start;
@@ -292,14 +293,11 @@ a{
 
 .archives-list{
     display: flex;
-    flex-direction: column;
+    flex-direction:row;
     align-self:flex-start;
-    background-color: white;
     border-radius: 5px;
     gap:10px;
-    padding:18px 25px;
-    border-bottom:5px solid #f5f5fa;
-    margin:-3px;
+    justify-content: start;
 }
 
 .archives-list>div{
@@ -521,7 +519,11 @@ a{
         right: 0;
     }
 }
+
 .antButton>ant-float-btn{
     right:50px;
 }
 
+.tag{
+    border-radius: 5px;
+}

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Link from 'next/link';
+import {Button} from 'antd'
 
 
 interface Post {
@@ -91,7 +92,7 @@ export default function Archives() {
     <h2 className="right-title">ARCHIVES</h2>
     <div className="archives-list">
         {uniqueYears.map((item, i) => (
-    <div className="archives-year" key={i}><Link href={`/archives/${item}`}>{item}</Link></div>))}
+    <Button className="tag" key={i}><Link href={`/archives/${item}`}>{item}</Link></Button>))}
     </div>
 </div>
   )

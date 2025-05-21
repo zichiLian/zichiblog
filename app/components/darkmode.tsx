@@ -17,10 +17,10 @@ export default function darkmode() {
     useEffect(() => {
         const root = document.documentElement;
         if (isDarkMode) {
-            root.style.setProperty("--background", "#65b7f3");
+            root.style.setProperty("--background", "#e5e5ea");
             root.style.setProperty("--text-color", "#112a45");
         } else {
-            root.style.setProperty("--background", "#b7e3fa");
+            root.style.setProperty("--background", "#e5e5ea");
             root.style.setProperty("--text-color", "#112a45");
         }
 
@@ -33,18 +33,15 @@ export default function darkmode() {
 useEffect(() => {
     const roots = document.documentElement;
     if (isDarkMode) {
-        roots.style.setProperty("--background", "#65b7f3");
-        roots.style.setProperty("--text-color", "#112a45");
+        roots.style.setProperty("--background", "#595959");
+        roots.style.setProperty("--text-color", "#141414");
     } else {
-        roots.style.setProperty("--background", "#b7e3fa");
+        roots.style.setProperty("--background", "#e5e5ea");
         roots.style.setProperty("--text-color", "#112a45");
     }
 })
     return (
         <>
-            <Button onClick={onClick}>
-                {isDarkMode ? "LightMode" : "DarkMode"}
-            </Button>
         </>
     )
 }
