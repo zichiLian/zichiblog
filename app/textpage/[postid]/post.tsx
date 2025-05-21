@@ -111,8 +111,8 @@ interface Tags{
                                     <p>{post.content}</p>
                                 </div>
                             </div>
-                            { auth &&  <button onClick={handleClick}>删除这篇</button> }
-                            { auth && <Update id={postid}/>}
+                            { auth.isAdmin && !auth.isLoading &&  <button onClick={handleClick}>删除这篇</button> }
+                            { auth.isAdmin && !auth.isLoading && <Update id={postid}/>}
                         </div>))}
                 </div>
             </div>
