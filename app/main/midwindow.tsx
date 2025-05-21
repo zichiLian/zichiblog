@@ -72,8 +72,8 @@ export default function Midwindow() {
                                     </span>
                                 ))}
                         </div>
-                        <Link href={`/textpage/${post.id}`}>
-                            <div className="mid-title">{post.title}</div>
+                        <Link href={`/textpage/${post.id}`} className="mid-title">
+                            {post.title}
                         </Link>
                         <p className="mid-footer">
                             <span>{post.formatted_time}</span>

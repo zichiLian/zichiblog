@@ -1,8 +1,7 @@
 'use client'
 import Midwindow from './main/midwindow'
 import React, {useEffect} from "react";
-import Rightnavbar from "@/app/main/rightnavbar";
-import Leftnavbar from "@/app/main/leftnavbar";
+
 
 
 export  default function HomePage() {
@@ -13,9 +12,7 @@ export  default function HomePage() {
 
     return (
    <>
-       <Leftnavbar/>
-       <Midwindow/>
-       <Rightnavbar/>
+       <Midwindow />
    </>
   );
 }

@@ -48,9 +48,6 @@ const pool = mysql.createPool({
     charset: 'utf8mb4_unicode_ci'
 });
 
-setInterval(() => {
-    pool.query('SELECT 1')
-        .catch(err => console.error('数据库心跳失败:', err.message));
-}, 25 * 1000);
+
 
 export default pool;

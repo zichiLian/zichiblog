@@ -4,6 +4,10 @@ import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { CustomerServiceOutlined, CloseOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
+import LandingPopup from '@/app/components/langdingpopup'
+import Rightnavbar from "@/app/main/rightnavbar";
+import Leftnavbar from "@/app/main/leftnavbar";
+
 
 const MetingPlayer = dynamic(
     () => import('@/app/components/metingplayer'),
@@ -38,7 +42,9 @@ export default function ClientLayout({
 
     return (
         <div style={{ background: "var(--background)" }} className="box">
+            <Leftnavbar />
             {children}
+            <Rightnavbar />
             <Draws/>
 
             <div className='antButton'>
@@ -64,6 +70,8 @@ export default function ClientLayout({
                     </div>
                 </div>
             )}
+            <LandingPopup />
         </div>
+
     );
 }

@@ -13,10 +13,7 @@ export default function TextPage() {
 
     return (
         <>
-            <Leftnavbar/>
             <Post id={postid as string} />
-            <Rightnavbar/>
-            <Draws/>
         </>
     )
 }

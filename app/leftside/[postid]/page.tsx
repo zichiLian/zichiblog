@@ -24,7 +24,6 @@ export default function TextPage() {
             } else {
         return (
             <div className="box">
-                <Leftnavbar/>
                 <div id="fullwindow">
                     <div className="container">
                             {postid === "Links" && <Links/>}
@@ -34,8 +33,6 @@ export default function TextPage() {
                             {postid === "RSS" && <Rss/>}
                     </div>
                 </div>
-                 <Rightnavbar/>
-                <Draws/>
             </div>
         )
     }

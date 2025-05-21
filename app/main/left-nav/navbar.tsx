@@ -1,37 +1,45 @@
 'use client'
-import React, {useEffect, useState} from 'react'
-import Link from "next/link";
+import React from 'react'
+import Link from "next/link"
+import Image from "next/image"
 
+interface NavItem {
+    id: number
+    name: string
+    svg: string
+}
 
+const navItems: NavItem[] = [
+    { id: 0, name: "Home", svg: "home.svg" },
+    { id: 1, name: "Links", svg: "links.svg" },
+    { id: 2, name: "Archives", svg: "archives.svg" },
+    { id: 3, name: "Categories", svg: "cate.svg" },
+    { id: 4, name: "RSS", svg: "rss.svg" },
+    { id: 5, name: "About", svg: "about.svg" },
+]
 
 export default function Navbar() {
-
-
-    const [naver,setNaver] = useState([])
-
-    useEffect(() => {
-    fetch('/api/Navers')
-        .then(response =>{if(!response.ok){
-          console.log('请求失败')
-        }
-          return response.json();
-        })
-        .then((response) => {
-          setNaver(response.data)
-        })
-  },
-        []);
-
     return (
-    <>
-    <ul className="info-list" key="{data.id}">
-        <li><span><img src={`/icons/home.svg`}/></span><Link href={'/'}>Home</Link></li>
-    {
-        naver.map(({id, name, svg})=>
-    <li key={id}><span><img src={`/icons/${svg}`}/></span><Link href={`/leftside/${name}`}>{name}</Link></li>
-    )}
-    </ul>
-
-</>
-  )
+        <ul className="info-list">
+            {navItems.map((item) => (
+                <li key={item.id}>
+                    <Link
+                        href={item.name === 'Home' ? '/' : `/leftside/${item.name}`}
+                        className="flex items-center hover:text-blue-500 transition-colors"
+                    >
+            <span className="mr-2">
+              <Image
+                  src={`/icons/${item.svg}`}
+                  alt={item.name}
+                  width={16}
+                  height={16}
+                  priority={item.id <= 2} // 前三个图标预加载
+              />
+            </span>
+                        {item.name}
+                    </Link>
+                </li>
+            ))}
+        </ul>
+    )
 }
