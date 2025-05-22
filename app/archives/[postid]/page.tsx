@@ -13,7 +13,7 @@ export default function TextPage() {
 
     return (
         <>
-            <Post id={postid as string} />
+            <Post/>
         </>
     )
 }

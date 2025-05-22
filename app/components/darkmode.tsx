@@ -36,7 +36,7 @@ useEffect(() => {
         roots.style.setProperty("--background", "#595959");
         roots.style.setProperty("--text-color", "#141414");
     } else {
-        roots.style.setProperty("--background", "#e5e5ea");
+        roots.style.setProperty("--background", "#f0f0f4");
         roots.style.setProperty("--text-color", "#112a45");
     }
 })
