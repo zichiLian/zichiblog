@@ -4,7 +4,8 @@ import {Button} from 'antd'
 
 
 interface Post {
-    time:string|number
+    time: number;
+    year:string|number
    }
 
 export default function Archives() {
@@ -54,7 +55,7 @@ export default function Archives() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch('/api/time');
+        const response = await fetch('/api/years');
 
         // 检查HTTP状态码
         if (!response.ok) {
@@ -68,16 +69,15 @@ export default function Archives() {
         // 数据格式验证
 
         setTitle(result.data);
-
     };
 
     fetchPosts();
   }, []);
 
 
-    const times = title.map(item => item.time);
-    const uniqueYears =[...new Set(times)]
+    const time = title.map(item => item.year);
 
+  console.log(time);
 
 //时间去重；
 //   const allDate = result.flatMap(item => item.time);
@@ -91,7 +91,7 @@ export default function Archives() {
     <div className="tags-icon"><img src="../icons/links.svg"/></div>
     <h2 className="right-title">ARCHIVES</h2>
     <div className="archives-list">
-        {uniqueYears.map((item, i) => (
+        {time.map((item, i) => (
     <Button className="tag" key={i}><Link href={`/archives/${item}`}>{item}</Link></Button>))}
     </div>
 </div>

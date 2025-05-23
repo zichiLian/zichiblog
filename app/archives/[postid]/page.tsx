@@ -2,10 +2,6 @@
 import '@/app/index.css'
 import Post from "@/app/archives/[postid]/post";
 import {useParams} from "next/navigation";
-import Rightnavbar from "@/app/main/rightnavbar";
-import Leftnavbar from "@/app/main/leftnavbar";
-import Draws from "@/app/components/quills";
-
 
 
 export default function TextPage() {
@@ -13,7 +9,7 @@ export default function TextPage() {
 
     return (
         <>
-            <Post/>
+            <Post />
         </>
     )
 }
