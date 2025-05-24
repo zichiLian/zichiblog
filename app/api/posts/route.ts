@@ -28,13 +28,22 @@ export async function GET(
                        menu
                 LIMIT 100
             `);
+            let posts : any;
+            [posts] = await connection.query(`
+                SELECT
+                       *
+                FROM 
+                       posts
+                LIMIT 100
+            `);
 
 
             // 确保返回标准JSON格式
             return new Response(JSON.stringify({
                 success: true,
                 data: rows,
-                tags:tag
+                tags:tag,
+                posts:posts
             }), {
                 status: 200,
                 headers: {

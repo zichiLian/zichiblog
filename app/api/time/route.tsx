@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
         const connection = await pool.getConnection()
         try {
             const [rows] = await connection.query(`
-        SELECT DATE_FORMAT(time, '%Y') as time
+        SELECT DATE_FORMAT(time, '%Y-%m-%d') as time
         FROM posts
         ORDER BY time 
         LIMIT 100
@@ -37,8 +37,8 @@ export async function GET(request: NextRequest) {
 
             return NextResponse.json({
                 success: true,
-                data: rows,
-                time: time,
+                data: time,
+                time: rows,
                 // @ts-ignore
                 posts: posts?.[0] || []
             })
