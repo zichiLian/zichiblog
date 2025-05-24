@@ -604,3 +604,9 @@ a{
     line-height: 1.6;
 }
 
+.notice-container{
+    background: #fff;
+    display: flex;
+    height:150px;
+    border-radius: 15px;
+}
