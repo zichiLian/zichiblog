@@ -77,7 +77,6 @@ export default function Archives() {
 
     const time = title.map(item => item.year);
 
-  console.log(time);
 
 //时间去重；
 //   const allDate = result.flatMap(item => item.time);
@@ -92,7 +91,7 @@ export default function Archives() {
     <h2 className="right-title">ARCHIVES</h2>
     <div className="archives-list">
         {time.map((item, i) => (
-    <Button className="tag" key={i}><Link href={`/archives/${item}`}>{item}</Link></Button>))}
+    <Button className="tag" key={i}><Link href={`/archive/${item}`}>{item}</Link></Button>))}
     </div>
 </div>
   )
