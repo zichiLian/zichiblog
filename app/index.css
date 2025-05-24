@@ -610,3 +610,45 @@ a{
     height:150px;
     border-radius: 15px;
 }
+
+
+.bilibili-stats {
+    max-width: 400px;
+    margin-right: 40px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bilibili-stats h2 {
+    color: #fb7299;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fb7299;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+}
