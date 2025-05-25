@@ -1,13 +1,12 @@
 'use client';
 import '../../index.css'
-import {Post} from "@/app/leftside/[postid]/post";
 import {useParams} from "next/navigation";
 import HomePage from "@/app/homepage";
 import React from "react";
 import Links from "@/app/leftside/links";
 import About from "@/app/leftside/about";
 import Archives from "@/app/archives/[postid]/post";
-import Categories from "@/app/leftside/categories";
+import Post from "@/app/leftside/categories";
 import Rss from "@/app/leftside/rss";
 
 
@@ -25,7 +24,7 @@ export default function TextPage() {
                             {postid === "Links" && <Links/>}
                             {postid === "About" && <About/>}
                             {postid === "Archives" && <Archives/>}
-                            {postid === "Categories" && <Categories/>}
+                            {postid === "Categories" && <Post/>}
                             {postid === "RSS" && <Rss/>}
                     </div>
                 </div>
