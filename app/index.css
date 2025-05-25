@@ -653,4 +653,83 @@ a{
     color: #666;
 }
 
+/* About 页面样式 */
+.about_title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.about_title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: #4299e1;
+    border-radius: 2px;
+}
+
+.about_card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 2rem;
+    margin: 1.5rem auto;
+    max-width: 800px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about_card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.about_card h1 {
+    font-size: 1.5rem;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.about_card p {
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.about_card a {
+    color: #3182ce;
+    -decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+.about_card a:hover {
+    color: #2b6cb0;
+    text-decoration: underline;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .about_card {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .about_title {
+        font-size: 2rem;
+    }
+}
 
