@@ -36,10 +36,10 @@ export default function MetingPlayer() {
     return (
         // @ts-ignore
         <meting-js
-            server="netease"
+            server="tencent"
             type="playlist"
             list-Folded="false"
-            id="13715590902"
+            id="7609725809"
             data-lrc-type="3"
             theme="#25b864"
 
