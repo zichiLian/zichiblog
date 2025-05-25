@@ -57,7 +57,7 @@ export default function Notice({userId = 24442474}) {
 
     return (
         <div className="bilibili-stats">
-            <a href='https://space.bilibili.com/24442474'>
+
             <h2>怪猫Maoko</h2>
             <div className="stats-grid">
                 <div className="stat-item">
@@ -68,8 +68,13 @@ export default function Notice({userId = 24442474}) {
                     <span className="stat-value">{data.following}</span>
                     <span className="stat-label">怪关注</span>
                 </div>
+                <div className="stat-item">
+                <a href='https://space.bilibili.com/24442474'>
+                    <span className='stat-value'>去关注</span>
+                </a>
+                </div>
             </div>
-            </a>
+
         </div>
     )
 }

@@ -55,7 +55,7 @@ export default function GET() {
                 setLoading(true);
                 setError(null);
 
-                const response = await fetch('/api/tags');
+                const response = await fetch('/api/cate');
 
                 // 检查HTTP状态码
                 if (!response.ok) {
@@ -91,7 +91,7 @@ export default function GET() {
     <h2 className="right-title">CATEGORIES</h2>
     <div className="tags">
         {uniqueTags.map((post,i)=> (
-            <Link className="tag" key={i} href={`/tagspage/${post}`}>
+            <Link className="tag" key={i} href={`/Categories/${post}`}>
                 {post}
             </Link>))}
 </div>
