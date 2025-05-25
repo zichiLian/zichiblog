@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation";
 import Update from "@/app/components/update";
 import Link from "next/link";
 import {useParams} from "next/navigation";
+import GiscusSimple from "@/app/components/giscus";
 
 
 
@@ -115,6 +116,7 @@ interface Tags{
                             { auth.isAdmin && !auth.isLoading && <Update id={postid}/>}
                         </div>))}
                 </div>
+                <GiscusSimple />
             </div>
         </div>
     )
