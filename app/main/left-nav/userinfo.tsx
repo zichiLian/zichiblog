@@ -1,9 +1,7 @@
 import React from 'react'
 
 
-function Img(props: { src: string }) {
-  return null;
-}
+
 
 export default function Userinfo() {
   return (

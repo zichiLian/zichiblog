@@ -22,14 +22,11 @@ export function Post({ id: postId }: { id: string }) {
     const router = useRouter();
     const [post, setPost] = useState<Post | null>(null);
     const [tags, setTags] = useState<Tag[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+
 
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                setLoading(true);
-                setError(null);
 
                 const response = await fetch(`/api/posttext?id=${postId}`);
 
@@ -48,9 +45,9 @@ export function Post({ id: postId }: { id: string }) {
                 setTags(result.tags || []);
 
             } catch (err) {
-                setError(err instanceof Error ? err.message : '获取文章失败');
+
             } finally {
-                setLoading(false);
+
             }
         };
 
@@ -78,7 +75,7 @@ export function Post({ id: postId }: { id: string }) {
 
             router.push('/');
         } catch (err) {
-            setError(err instanceof Error ? err.message : '删除操作失败');
+           console.log(err)
         }
     };
 

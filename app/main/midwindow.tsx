@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Rightnavbar from "@/app/main/rightnavbar";
 
 interface Post {
     id: number;
@@ -15,8 +16,6 @@ interface Tag {
 
 export default function Midwindow() {
     const [posts, setPosts] = useState<Post[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [tags, setTags] = useState<Tag[]>([]);
 
     useEffect(() => {
@@ -31,10 +30,10 @@ export default function Midwindow() {
 
 
 
-    const splitTags = (str?: string | null): string[] => {
-        if (!str) return [];
-        return str.split(/[｜|]/).map(tag => tag.trim()).filter(Boolean);
-    };
+    // const splitTags = (str?: string | null): string[] => {
+    //     if (!str) return [];
+    //     return str.split(/[｜|]/).map(tag => tag.trim()).filter(Boolean);
+    // };
     //
     // const splitTags = (
     //     str: string | null | undefined, // 处理可能空值
@@ -57,9 +56,10 @@ export default function Midwindow() {
 
 
     return (
+        <>
         <div id="fullwindow">
             <div className="container">
-                {posts.map((post, index) => (
+                {posts.map((post) => (
                     <div className="book" key={post.id}>
                         <div className="mid-icon">
                             {tags
@@ -89,5 +89,7 @@ export default function Midwindow() {
                 <p className="footer-text">Build by zichi</p>
             </div>
         </div>
+            <Rightnavbar/>
+        </>
     );
 }
