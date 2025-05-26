@@ -4,8 +4,11 @@ import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { CustomerServiceOutlined, CloseOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
+// @ts-ignore
 import LandingPopup from '@/app/components/langdingpopup'
+// @ts-ignore
 import Rightnavbar from "@/app/main/rightnavbar";
+// @ts-ignore
 import Leftnavbar from "@/app/main/leftnavbar";
 
 
@@ -27,6 +30,7 @@ export default function ClientLayout({
     const pathname = usePathname();
     const [playerVisible, setPlayerVisible] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
+    const isHomepage = pathname === '/';
 
     useEffect(() => {
         setIsMounted(true);
@@ -42,9 +46,8 @@ export default function ClientLayout({
 
     return (
         <div style={{ background: "var(--background)" }} className="box">
-            <Leftnavbar />
+            {!isHomepage && <Leftnavbar /> }
             {children}
-            <Rightnavbar />
             <Draws/>
 
             <div className='antButton'>
@@ -70,7 +73,6 @@ export default function ClientLayout({
                     </div>
                 </div>
             )}
-            <LandingPopup />
         </div>
 
     );

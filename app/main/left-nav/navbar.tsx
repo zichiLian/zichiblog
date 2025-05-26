@@ -24,7 +24,7 @@ export default function Navbar() {
             {navItems.map((item) => (
                 <li key={item.id}>
                     <Link
-                        href={item.name === 'Home' ? '/' : `/leftside/${item.name}`}
+                        href={item.name === 'Home' ? '/home' : `/leftside/${item.name}`}
                         className="flex items-center hover:text-blue-500 transition-colors"
                     >
             <span className="mr-2">

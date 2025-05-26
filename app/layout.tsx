@@ -1,5 +1,6 @@
 import { Outfit } from "next/font/google";
 import "./globals.css";
+// @ts-ignore
 import ClientLayout from "./client-layout";
 
 const geistSans = Outfit({

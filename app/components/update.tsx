@@ -2,11 +2,9 @@
 import React, { useEffect, useRef, useState, forwardRef, useCallback } from "react";
 import Quill, { Delta } from "quill";
 import 'quill/dist/quill.snow.css';
-import { ConfigProvider, Space, notification, Button, Modal } from 'antd';
-import { FloatButton } from 'antd';
+import { notification, Button, Modal } from 'antd';
 import Posttag from "@/app/components/tags";
 import { useAuth } from "@/app/hooks/useAuth";
-import {useParams} from "next/navigation";
 
 interface Post {
     id: number;
@@ -15,10 +13,6 @@ interface Post {
     formatted_time: string;
 }
 
-interface postid{
-    id: number;
-    children:string;
-}
 
 
 // 类型扩展声明
