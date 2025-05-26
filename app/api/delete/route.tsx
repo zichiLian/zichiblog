@@ -1,46 +1,75 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { db } from '@/src/db';
+import { posts } from '@/src/schema';
+import { eq } from 'drizzle-orm';
 
-import {NextRequest, NextResponse} from 'next/server'
-import pool from '@/app/db'
+export async function POST(req: NextRequest) {
+    try {
+        // 1. 获取并验证参数
+        const params = req.method === 'POST'
+            ? await req.json()
+            : Object.fromEntries(req.nextUrl.searchParams.entries());
 
+        if (!params.id) {
+            return NextResponse.json(
+                { success: false, message: '缺少必要参数: id' },
+                { status: 400 }
+            );
+        }
 
+        const postId = Number(params.id);
+        if (isNaN(postId)) {
+            return NextResponse.json(
+                { success: false, message: 'ID必须是数字' },
+                { status: 400 }
+            );
+        }
 
-async function Delete(
-    req: NextRequest)
-{
-    const params = req.method === 'POST' ?  await req.json() : Object.fromEntries(req.nextUrl.searchParams.entries())
-//前端收到的请求，params打包
+        // 2. 使用Drizzle执行删除
+        const result = await db
+            .delete(posts)
+            .where(eq(posts.id, postId));
 
-//定义str变量，把获取来的params转为jason格式
+        // 3. 检查是否成功删除
+        if (result[0].affectedRows === 0) {
+            return NextResponse.json(
+                { success: false, message: '未找到对应文章' },
+                { status: 404 }
+            );
+        }
 
- const id =params.id;
-console.log(id);
-    let connection;
+        // 4. 返回成功响应
+        return NextResponse.json({
+            success: true,
+            message: '文章删除成功',
+            affectedRows: result[0].affectedRows
+        });
 
-    // 创建连接池
-    connection = await pool.getConnection();
+    } catch (error) {
+        console.error('删除文章失败:', error);
+        return NextResponse.json(
+            {
+                success: false,
+                message: '服务器内部错误',
+            },
+            { status: 500 }
+        );
+    }
+
 
     // const [postid] = await connection.query(`SELECT MAX(id) FROM posts`)
 
 
-
-    const [del] = await connection.query(`
-         DELETE FROM 
-            posts
-         where id = 
-             ${id}
-        `);
+    //
+    // const [del] = await connection.query(`
+    //      DELETE FROM
+    //         posts
+    //      where id =
+    //          ${id}
+    //     `);
 
 
     // fs.writeFileSync(`./storage/posts/text${postdata.postNum}.json`, JSON.stringify(str),{flag:'w+'})
 //将获取来的文章内容，创建并写入{文章数量}.json文件。
 
-
-    return Response.json({
-
-    })
-}
-
-
-export {
-    Delete as POST
 }

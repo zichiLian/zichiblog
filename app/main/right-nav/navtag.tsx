@@ -63,7 +63,7 @@ export default function Navtag() {
                 setLoading(true);
                 setError(null);
 
-                const response = await fetch('/api/tags');
+                const response = await fetch('/api/cate');
 
                 // 检查HTTP状态码
                 if (!response.ok) {
@@ -79,7 +79,7 @@ export default function Navtag() {
                     throw new Error('无效的数据格式');
                 }
 
-                setTags(result.data);
+                setTags(result.tags);
 
         };
 

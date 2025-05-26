@@ -1,14 +1,8 @@
-import {useAuth} from "@/app/hooks/useAuth";
-import React, {useEffect, useState} from "react";
-import fs from "node:fs";
-import {useRouter} from "next/navigation";
+import { useAuth } from "@/app/hooks/useAuth";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Update from "@/app/components/update";
-import Link from "next/link";
-import {useParams} from "next/navigation";
-import GiscusSimple from "@/app/components/giscus";
-
-
-
+import GiscusSimple from '@/app/components/giscus';
 
 interface Post {
     id: number;
@@ -17,107 +11,141 @@ interface Post {
     formatted_time: string;
 }
 
-interface Tags{
-    number: React.Key | null | undefined;
+interface Tag {
+    number: number;
     id: number;
-    name:string;
+    name: string;
 }
 
-
-
-
-
-    export function Post( params: { id: any; }){
-    const postid = params.id
-
-
-    const auth=useAuth();
-//用params链接page页
-    const [tags, setTags] = useState<Tags[]>([]);
-    const [posts, setPosts] = useState<Post[]>([]);
+export function Post({ id: postId }: { id: string }) {
+    const auth = useAuth();
+    const router = useRouter();
+    const [post, setPost] = useState<Post | null>(null);
+    const [tags, setTags] = useState<Tag[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // 安全转换类型为数组
-
     useEffect(() => {
-        const fetchPosts = async () => {
+        const fetchPost = async () => {
+            try {
                 setLoading(true);
                 setError(null);
 
-                const response = await fetch(`/api/posttext?id=${params.id}`);
+                const response = await fetch(`/api/posttext?id=${postId}`);
 
-                // 检查HTTP状态码
                 if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.error?.message || `HTTP错误! 状态码: ${response.status}`);
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || `请求失败，状态码: ${response.status}`);
                 }
 
                 const result = await response.json();
 
-                // 数据格式验证
-                if (!Array.isArray(result?.data)) {
-                    throw new Error('无效的数据格式');
+                // 验证后端返回的数据格式
+                if (!result.success || !result.data) {
+                    throw new Error('无效的API响应格式');
                 }
 
-                setPosts(result.data);
-                setTags(result.tags);
+                setPost(result.data);
+                setTags(result.tags || []);
+
+            } catch (err) {
+                setError(err instanceof Error ? err.message : '获取文章失败');
+            } finally {
+                setLoading(false);
+            }
         };
 
+        fetchPost();
+    }, [postId]);
 
-        fetchPosts();
-    }, []);
-
-    const router = useRouter();
-
-    const handleClick = () => {
-            if(auth){
-            fetch('/api/delete', {
-            method: 'POST',
-            body: JSON.stringify(params),
-            //发送请求，类型为post类型，内容为obj，发送时将json格式的obj转换为字符串string类型。
-            //将QuillRef数据下的innerHTML发送
-        });
-         router.push('/');
-             }else{
-                 console.log('请先登录')
-             }
-            //发送请求，类型为post类型，内容为obj，发送时将json格式的obj转换为字符串string类型。
-            //将QuillRef数据下的innerHTML发送
+    const handleDelete = async () => {
+        if (!auth?.isAdmin) {
+            console.log('请先登录');
+            return;
         }
-        // .then(res => res.json())
-        // .then(data => setGetid(data))//useState方法取出data
-    //思路：我们构建了一个手动维护的文件夹，利用该文件找到所有文章文件的名字，再调用其中对应的文章名的文章，tags，文章，id信息。
-    // fetch(`/api/posttext?id=${params.id}`) //将pramas.id 这个参数发送到后端api，让API用到这个参数
 
+        try {
+            const response = await fetch('/api/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: postId }),
+            });
 
+            if (!response.ok) {
+                throw new Error('删除失败');
+            }
+
+            router.push('/');
+        } catch (err) {
+            setError(err instanceof Error ? err.message : '删除操作失败');
+        }
+    };
+
+    if (loading) {
+        return <div className="text-center py-8">加载中...</div>;
+    }
+
+    if (error) {
+        return (
+            <div className="text-center py-8 text-red-500">
+                错误: {error}
+                <button
+                    onClick={() => window.location.reload()}
+                    className="ml-4 px-4 py-2 bg-blue-500 text-white rounded"
+                >
+                    重试
+                </button>
+            </div>
+        );
+    }
+
+    if (!post) {
+        return <div className="text-center py-8">文章不存在</div>;
+    }
 
     return (
         <div className="box">
             <div id="fullwindow">
                 <div className="container">
-                    {posts.map((post) => (
-                        <div className="book" key = {post.id}>
-                            <div className="mid-icon">
-                                {tags.map((tag) => (
-                                <span key={tag.number}>
-                                    {tag.name}
-                                </span>))}
+                    <div className="book" key={post.id}>
+                        <div className="mid-icon">
+                            {tags.map((tag) => (
+                                <span key={`${tag.id}-${tag.number}`} className="tag">
+                  {tag.name}
+                </span>
+                            ))}
+                        </div>
+                        <div className="mid-title">{post.title}</div>
+                        <p className="mid-footer">
+                            <span>{post.formatted_time}</span>
+                        </p>
+                        <div className="textpan">
+                            <div className="texttitle">
+                                <p>{post.title}</p>
                             </div>
-                            <div className="mid-title">{post.title}</div>
-                            <p className="mid-footer"><span>{post.formatted_time}</span><span></span></p>
-                            <div className="textpan">
-                                <div className="texttitle"><p>{post.title}</p></div>
-                                <div className="textcontent">
-                                    <p>{post.content}</p>
-                                </div>
+                            <div
+                                className="textcontent"
+                                dangerouslySetInnerHTML={{ __html: post.content }}
+                            />
+                        </div>
+
+                        {auth?.isAdmin && !auth.isLoading && (
+                            <div className="mt-4 space-x-4">
+                                <button
+                                    onClick={handleDelete}
+                                    className="px-4 py-2 bg-red-500 text-white rounded"
+                                >
+                                    删除这篇
+                                </button>
+                                <Update id={postId} />
                             </div>
-                            { auth.isAdmin && !auth.isLoading &&  <button onClick={handleClick}>删除这篇</button> }
-                            { auth.isAdmin && !auth.isLoading && <Update id={postid}/>}
-                        </div>))}
+                        )}
+                    </div>
                 </div>
                 <GiscusSimple />
             </div>
         </div>
-    )
+    );
 }

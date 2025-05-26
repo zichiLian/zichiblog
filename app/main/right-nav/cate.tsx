@@ -91,7 +91,7 @@ export default function GET() {
     <h2 className="right-title">CATEGORIES</h2>
     <div className="tags">
         {uniqueTags.map((post,i)=> (
-            <Link className="tag" key={i} href={`/Categories/${post}`}>
+            <Link className="tag" key={i} href={`/categories/${post}`}>
                 {post}
             </Link>))}
 </div>

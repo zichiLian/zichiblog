@@ -1,50 +1,64 @@
-import pool from "@/app/db";
+import { db } from '@/src/db';
+import {cate, tags} from '@/src/schema';
+import { NextResponse } from 'next/server';
 
-//
-// type ResponseData = {
-//   message: string
-// }
-//
-// let tagsdata: any;
-// let cacheData:any;
-
-async function Cate(){
-
-//定义str变量，把获取来的params转为jason格式
-
-    const connection = await pool.getConnection();
-
+export async function GET() {
     try {
-        // 使用JSON_EXTRACT确保从MySQL获取有效的JSON
-        const [row] = await connection.query(`
-            SELECT 
-                  number,id,name 
-            FROM 
-                  cate
-            ORDER BY 
-                   id DESC    
-                   LIMIT 100
-            `);
 
-        // 确保返回标准JSON格式
-        return new Response(JSON.stringify({
+        const results = await db
+            .select({
+                number: cate.number,
+                id: cate.id,
+                name: cate.name
+            })
+            .from(cate)
+            .orderBy(cate.id)
+            .limit(100);
+
+        const tag = await db
+            .select({
+                number: tags.number,
+                id: tags.id,
+                name: tags.name
+            })
+            .from(tags)
+            .orderBy(tags.id)
+            .limit(100);
+
+
+        return NextResponse.json({
             success: true,
-            data: row
-        }), {
-            status: 200,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-            }
+            data: results,
+            tags: tag
         });
 
-    } finally {
-        connection.release();
+    } catch (error) {
+        console.error('获取分类列表失败:', error);
+        return NextResponse.json(
+            {
+                success: false,
+                message: '获取分类列表失败'
+            },
+            { status: 500 }
+        );
     }
 }
 
-
-
-export {
-    Cate as GET,
-    Cate as POST
+export async function POST() {
+    return NextResponse.json(
+        {
+            success: false,
+            message: '本接口仅支持GET请求'
+        },
+        { status: 405 }
+    );
 }
+        // const [row] = await connection.query(`
+        //     SELECT
+        //           number,id,name
+        //     FROM
+        //           cate
+        //     ORDER BY
+        //            id DESC
+        //            LIMIT 100
+        //     `);

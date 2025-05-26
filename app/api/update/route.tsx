@@ -1,44 +1,51 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { db } from '@/src/db';
+import { posts } from '@/src/schema';
+import { eq } from 'drizzle-orm';
 
-import {NextRequest, NextResponse} from 'next/server'
-import pool from '@/app/db'
+export async function POST(req: NextRequest) {
+    try {
+        // 1. 安全获取参数
+        const params = req.method === 'POST'
+            ? await req.json()
+            : Object.fromEntries(req.nextUrl.searchParams.entries());
 
-async function Delete(
-    req: NextRequest)
-{
-    const params = req.method === 'POST' ?  await req.json() : Object.fromEntries(req.nextUrl.searchParams.entries())
-//前端收到的请求，params打包
+        // 2. 参数验证
+        if (!params.id?.id || !params.title || !params.content) {
+            return NextResponse.json(
+                { success: false, message: 'Missing required fields' },
+                { status: 400 }
+            );
+        }
 
-//定义str变量，把获取来的params转为jason格式
+        const postId = params.id.id;
 
-    const id =params.id.id;
+        // 3. 使用Drizzle执行更新
+        const result = await db
+            .update(posts)
+            .set({
+                title: params.title,
+                content: params.content,
+                lasttime: params.time ? new Date(params.time) : new Date()
+            })
+            .where(eq(posts.id, postId));
 
-    let connection;
+        // 4. 正确获取影响行数
+        const affectedRows = result[0].affectedRows;
 
-    // 创建连接池
-    connection = await pool.getConnection();
+        // 5. 返回标准化响应
+        return NextResponse.json({
+            success: true,
+            data: {
+                affectedRows: affectedRows
+            }
+        });
 
-    // const [postid] = await connection.query(`SELECT MAX(id) FROM posts`)
-
-
-
-    const [update] = await connection.query(
-        `UPDATE posts
-         SET title = ?, content = ? ,lasttime = ?
-         WHERE id = ?`,
-        [params.title, params.content,params.time,id] // 参数按顺序对应问号
-    );
-
-
-    // fs.writeFileSync(`./storage/posts/text${postdata.postNum}.json`, JSON.stringify(str),{flag:'w+'})
-//将获取来的文章内容，创建并写入{文章数量}.json文件。
-
-
-    return Response.json({
-
-    })
-}
-
-
-export {
-    Delete as POST
+    } catch (error) {
+        console.error('Error updating post:', error);
+        return NextResponse.json(
+            { success: false, message: 'Database operation failed' },
+            { status: 500 }
+        );
+    }
 }

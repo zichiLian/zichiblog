@@ -55,7 +55,7 @@ export default function Archives() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch('/api/years');
+        const response = await fetch('/api/time');
 
         // 检查HTTP状态码
         if (!response.ok) {
@@ -68,7 +68,7 @@ export default function Archives() {
 
         // 数据格式验证
 
-        setTitle(result.data);
+        setTitle(result.years);
     };
 
     fetchPosts();

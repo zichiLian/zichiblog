@@ -1,4 +1,3 @@
-// components/GiscusComments.tsx
 'use client'
 import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
@@ -16,7 +15,7 @@ const GiscusComments = () => {
     useEffect(() => {
         if (!ref.current || ref.current.hasChildNodes()) return
 
-        // 确保只加载一次
+
         if (window.giscusLoaded) return
         window.giscusLoaded = true
 
@@ -25,7 +24,7 @@ const GiscusComments = () => {
         script.async = true
         script.crossOrigin = 'anonymous'
 
-        // 使用完整URL作为term
+
         const term = window.location.pathname + window.location.search
 
         script.setAttribute('data-repo', 'zichiLian/zichiblog')

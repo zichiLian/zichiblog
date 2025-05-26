@@ -1,83 +1,71 @@
-import {NextRequest, NextResponse} from 'next/server'
-import pool from '@/app/db'
+// app/api/posts/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { db } from '@/src/db';
+import { posts, tags, menu } from '@/src/schema';
+import { eq } from 'drizzle-orm';
 
-async function postcontent(
-    req: NextRequest)
-{
-    const params = req.method === 'POST' ?  await req.json() : Object.fromEntries(req.nextUrl.searchParams.entries())
-//前端收到的请求，params打包
+export async function POST(req: NextRequest) {
+    try {
+        // 1. 获取并验证参数
+        const params = req.method === 'POST'
+            ? await req.json()
+            : Object.fromEntries(req.nextUrl.searchParams.entries());
 
-//定义str变量，把获取来的params转为jason格式
+        if (!params.title || !params.content || !params.tags) {
+            return NextResponse.json(
+                { success: false, message: '缺少必要参数' },
+                { status: 400 }
+            );
+        }
 
+        // 2. 获取最新ID（安全方式）
+        const [latestPost] = await db
+            .select({ id: posts.id })
+            .from(posts)
+            .orderBy(posts.id)
+            .limit(1);
 
+        const newId = latestPost ? latestPost.id + 1 : 1;
+        const tagList = Array.isArray(params.tags) ? params.tags : [params.tags];
+        const tagsString = tagList.join('｜');
 
-    let connection;
+        // 3. 使用事务确保数据一致性
+        await db.transaction(async (tx) => {
+            // 插入文章
+            await tx.insert(posts).values({
+                id: newId,
+                title: params.title,
+                content: params.content,
+                time: params.time || new Date()
+            });
 
-        // 创建连接池
-        connection = await pool.getConnection();
+            // 插入标签
+            for (const tagName of tagList) {
+                await tx.insert(tags).values({
+                    id: newId,
+                    name: tagName
+                });
+            }
 
-        // const [postid] = await connection.query(`SELECT MAX(id) FROM posts`)
-    let postid: any;
-    [postid] = await connection.query(`SELECT id FROM posts`);
+            // 插入菜单
+            await tx.insert(menu).values({
+                id: newId,
+                title: params.title,
+                tag: tagsString
+            });
+        });
 
-    let id: number;
-         id = postid.length+1 ;
-        const title = params.title;
-        const content = params.content;
-        const tag = params.tags;
-        const tags = tag.join('｜');
-        const time = params.time;
-    //select 和 insert语句中， 这些数值可以帮助我使用where = xxx关键字语句
+        // 4. 返回成功响应
+        return NextResponse.json({
+            success: true,
+            data: { id: newId }
+        });
 
-console.log('tags',tags);
-
-
-    const [write] = await connection.query(`
-         INSERT INTO posts(id, title, content, time)
-         values
-             (${id},
-             '${title}','${content}','${time}')
-        `);
-
-
-    for(let i =0 ; i < tag.length; i++) {
-        const [tagsInto] = await connection.query(`
-            INSERT INTO tags(id,name)
-            values (
-            ${id} , '${tag[i]}'
-          )
-        `)
+    } catch (error) {
+        console.error('创建文章失败:', error);
+        return NextResponse.json(
+            { success: false, message: '服务器内部错误' },
+            { status: 500 }
+        );
     }
-
-    const [menu] = await connection.query(`
-            INSERT INTO menu(id , title , tag)
-            VALUES
-                ('${id}','${title}','${tags}')
-        `);
-
-
-
-
-
-
-    //
-    // const [insertTags] = await connection.query(`
-    // UPDATE tie_up
-    // SET type = CONCAT(COALESCE(type, ''), ?)
-    // WHERE id = ?`
-    //     , [tags, id]);
-    //
-
-    // fs.writeFileSync(`./storage/posts/text${postdata.postNum}.json`, JSON.stringify(str),{flag:'w+'})
-//将获取来的文章内容，创建并写入{文章数量}.json文件。
-
-
-    return Response.json({
-
-    })
-}
-
-
-export {
-    postcontent as POST
 }
