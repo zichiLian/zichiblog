@@ -40,7 +40,6 @@ export function Post({ id: postId }: { id: string }) {
 
                 const result = await response.json();
 
-                // 验证后端返回的数据格式
                 if (!result.success || !result.data) {
                     throw new Error('无效的API响应格式');
                 }
@@ -83,66 +82,47 @@ export function Post({ id: postId }: { id: string }) {
         }
     };
 
-    if (loading) {
-        return <div className="text-center py-8">加载中...</div>;
-    }
-
-    if (error) {
-        return (
-            <div className="text-center py-8 text-red-500">
-                错误: {error}
-                <button
-                    onClick={() => window.location.reload()}
-                    className="ml-4 px-4 py-2 bg-blue-500 text-white rounded"
-                >
-                    重试
-                </button>
-            </div>
-        );
-    }
-
-    if (!post) {
-        return <div className="text-center py-8">文章不存在</div>;
-    }
 
     return (
         <div className="box">
             <div id="fullwindow">
                 <div className="container">
-                    <div className="book" key={post.id}>
-                        <div className="mid-icon">
-                            {tags.map((tag) => (
-                                <span key={`${tag.id}-${tag.number}`} className="tag">
-                  {tag.name}
-                </span>
-                            ))}
-                        </div>
-                        <div className="mid-title">{post.title}</div>
-                        <p className="mid-footer">
-                            <span>{post.formatted_time}</span>
-                        </p>
-                        <div className="textpan">
-                            <div className="texttitle">
-                                <p>{post.title}</p>
+                    {post && ( // 保留这个条件渲染确保类型安全
+                        <div className="book" key={post.id}>
+                            <div className="mid-icon">
+                                {tags.map((tag) => (
+                                    <span key={`${tag.id}-${tag.number}`} className="tag">
+                    {tag.name}
+                  </span>
+                                ))}
                             </div>
-                            <div
-                                className="textcontent"
-                                dangerouslySetInnerHTML={{ __html: post.content }}
-                            />
-                        </div>
+                            <div className="mid-title">{post.title}</div>
+                            <p className="mid-footer">
+                                <span>{post.formatted_time}</span>
+                            </p>
+                            <div className="textpan">
+                                <div className="texttitle">
+                                    <p>{post.title}</p>
+                                </div>
+                                <div
+                                    className="textcontent"
+                                    dangerouslySetInnerHTML={{ __html: post.content }}
+                                />
+                            </div>
 
-                        {auth?.isAdmin && !auth.isLoading && (
-                            <div className="mt-4 space-x-4">
-                                <button
-                                    onClick={handleDelete}
-                                    className="px-4 py-2 bg-red-500 text-white rounded"
-                                >
-                                    删除这篇
-                                </button>
-                                <Update id={postId} />
-                            </div>
-                        )}
-                    </div>
+                            {auth?.isAdmin && !auth.isLoading && (
+                                <div className="mt-4 space-x-4">
+                                    <button
+                                        onClick={handleDelete}
+                                        className="px-4 py-2 bg-red-500 text-white rounded"
+                                    >
+                                        删除这篇
+                                    </button>
+                                    <Update id={postId} />
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
                 <GiscusSimple />
             </div>
