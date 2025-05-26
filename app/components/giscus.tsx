@@ -39,6 +39,7 @@ const GiscusComments = () => {
         script.setAttribute('data-lang', 'zh-CN')
         script.setAttribute('data-loading', 'lazy')
         script.setAttribute('data-strict', '0')
+        script.setAttribute('data-theme', 'light')
 
         // 错误处理
         script.onerror = () => {

@@ -118,7 +118,7 @@ export function Post({ id: postId }: { id: string }) {
                                     >
                                         删除这篇
                                     </button>
-                                    <Update id={postId} />
+                                    <Update id={Number(postId)} />
                                 </div>
                             )}
                         </div>
