@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/src/db';
-import { posts } from '@/src/schema';
+import { posts, tags, cate, menu } from '@/src/schema';
 import { eq } from 'drizzle-orm';
 
 export async function POST(req: NextRequest) {
@@ -26,9 +26,21 @@ export async function POST(req: NextRequest) {
         }
 
         // 2. 使用Drizzle执行删除
-        const result = await db
+        const result = await
+            db
             .delete(posts)
             .where(eq(posts.id, postId));
+
+
+        const tag = await
+            db
+                .delete(tags)
+                .where(eq(tags.id, postId));
+
+        const categ = await
+            db
+                .delete(menu)
+                .where(eq(menu.id, postId));
 
         // 3. 检查是否成功删除
         if (result[0].affectedRows === 0) {
