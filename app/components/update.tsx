@@ -10,8 +10,8 @@ import {useParams} from "next/navigation";
 
 interface Post {
     id: number;
-    title: string;
-    content: string;
+    title: string | number;
+    content: string ;
     formatted_time: string;
 }
 
@@ -75,7 +75,12 @@ const Update = (postid:Postid) => {
 
     const quillRef = useRef<Quill | null>(null);
     const quilltitle = useRef<HTMLDivElement>(null);
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [posts, setPosts] = useState<Post>({
+        id: 0,
+        title: '',
+        content: '',
+        formatted_time: ''
+    });
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
@@ -148,6 +153,8 @@ const Update = (postid:Postid) => {
             }
     }, [postid, tags, api]);
 
+
+
     return (
         <>
             <div>
@@ -193,12 +200,12 @@ const Update = (postid:Postid) => {
                         ref={quilltitle}
                         contentEditable
                         className="titleput"
-                        dangerouslySetInnerHTML={{ __html: post.title }}
+                        dangerouslySetInnerHTML={{ __html: posts.title }}
                     />
 
                     <Editor
                         ref={quillRef}
-                        defaultValue={new Delta().insert(post.content)}
+                        defaultValue={new Delta().insert(posts.content)}
                     />
                 </Modal>
 
