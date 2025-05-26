@@ -161,9 +161,8 @@ const Update = (postid:Postid) => {
 
             {contextHolder}
 
-            {posts.map((post) => (
                 <Modal
-                    key={post.id}
+
                     width={1200}
                     open={open}
                     title="提交文章"
@@ -202,7 +201,7 @@ const Update = (postid:Postid) => {
                         defaultValue={new Delta().insert(post.content)}
                     />
                 </Modal>
-            ))}
+
         </>
     );
 };

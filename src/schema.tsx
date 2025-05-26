@@ -16,7 +16,7 @@ export const tags = mysqlTable('tags', {
     name: varchar('name', { length: 20 }), // 长度限制20的字符串
 });
 
-export const cate = mysqlTable('tags', {
+export const cate = mysqlTable('cate', {
     number: serial('number').primaryKey(), // 自增主键
     id: int('id'),                         // 普通INT字段
     name: varchar('name', { length: 20 }), // 长度限制20的字符串
