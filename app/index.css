@@ -653,4 +653,128 @@ a{
     color: #666;
 }
 
+/* 基础样式 */
+.links-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
 
+.links-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.links-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+}
+
+.links-header p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* 链接卡片网格布局 */
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.link-card {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    border: 1px solid #eee;
+    text-decoration: none;
+    color: inherit;
+}
+
+.link-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border-color: #6366f1;
+}
+
+/* 链接内容样式 */
+.link-avatar {
+    flex-shrink: 0;
+    margin-right: 1.5rem;
+}
+
+.link-avatar img {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f3f4f6;
+}
+
+.link-content h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1e40af;
+}
+
+.link-content p {
+    font-size: 0.95rem;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.link-url {
+    font-size: 0.85rem;
+    color: #6b7280;
+    word-break: break-all;
+}
+
+/* 暗色模式支持 */
+@media (prefers-color-scheme: dark) {
+    .links-header h1 {
+        color: #f3f4f6;
+    }
+
+    .links-header p {
+        color: #d1d5db;
+    }
+
+    .link-card {
+        background: #1f2937;
+        border-color: #374151;
+    }
+
+    .link-content h3 {
+        color: #93c5fd;
+    }
+
+    .link-content p {
+        color: #9ca3af;
+    }
+
+    .link-url {
+        color: #9ca3af;
+    }
+
+    .link-avatar img {
+        border-color: #4b5563;
+    }
+}
+
+/* 移动端适配 */
+@media (max-width: 640px) {
+    .links-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .links-header h1 {
+        font-size: 2rem;
+    }
+}
