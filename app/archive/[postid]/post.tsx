@@ -1,10 +1,5 @@
 import React, {useEffect, useState} from 'react';
 
-import { useRouter } from 'next/router';
-
-interface Timedata {
-    time?: string // 允许空值和undefined
-}
 
 interface Post {
     id: number;
@@ -31,7 +26,6 @@ const Post = ({ id }: PostProps) => {
     const postid = id
 
     const [post,setPost] = useState<Post[]>();
-    const [time,setTime] = useState<Timedata[]>();
     const [tags,setTags] = useState<Tags[]>()   ;
 
 

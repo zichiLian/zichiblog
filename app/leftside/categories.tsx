@@ -9,7 +9,6 @@ interface Post {
 
 const Post = () => {
     const [posts, setPosts] = useState<Post[]>([]);
-    const [groupedPosts, setGroupedPosts] = useState<Record<number, Record<number, Post[]>>>({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -38,8 +37,8 @@ const Post = () => {
         <>
         {posts.map((post: Post) => (
 
-        <div key={post.id} className="Cate-container">
-           <Link href={`/categories/${post.name}`}> {post.name}</Link>
+        <div key={post.id} className="cate-container">
+           <Link className='cate-card' href={`/categories/${post.name}`}> {post.name}</Link>
         </div>
 ))}
             </>

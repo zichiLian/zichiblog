@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import Update from "@/app/components/update";
 import Link from "next/link";
 
 
@@ -10,22 +9,12 @@ interface Post {
     formatted_time: string;
 }
 
-interface Tags{
-    number: React.Key | null | undefined;
-    id: number;
-    name:string;
-}
-
-
-
-
 // @ts-ignore
 export function Post(params) {
 //params.id为当前页面的名字
     const postid = params.id;
     const title = decodeURIComponent(postid); //解码
 
-    const [tags, setTags] = useState<Tags[]>([]);
     const [posts, setPosts] = useState<Post[]>([]);
 
 
