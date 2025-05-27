@@ -1,27 +1,37 @@
 import React from 'react';
+import '@/app/index.css'; // 假设样式保存在这个文件
 
 const About = () => {
     return (
-        <>
+        <div className="about_container">
+            <h1 className="about_title">
+                关于本站
+            </h1>
 
-        <h1>
-            关于本站
-        </h1>
-            <div>
+            <div className="about_card">
                 <p>
-                这是一个新手测试博客，没什么技术含量的站点
+                    这是一个新手测试博客，没什么技术含量的站点，但充满学习热情和进步空间。
                 </p>
+                <h1>联系方式：</h1>
+                <p>邮箱: <a href="mailto:2362982442@qq.com">2362982442@qq.com</a></p>
                 <p>
-                    文章内容目前没有太多想法，只是新手，也正常，有其他问题可以联系我
+                    <a href='https://space.bilibili.com/24442474' target="_blank" rel="noopener noreferrer">
+                        → 点击关注我的哔哩哔哩主页 ←
+                    </a>
                 </p>
-                <h1>
-                    联络方式：
-                    xxxxxxxx
-                    xxxxxxxx
-                    xxxxxxxx
-                </h1>
             </div>
-        </>
+
+            <div className="about_card">
+                <h1 className="about_title">关于我</h1>
+                <p>
+                    如你所见，我是一个刚入行的萌新开发者，正在不断学习和成长中。
+                    如果你发现任何问题或BUG，欢迎随时联系我反馈。
+                </p>
+                <p>
+                    友链交换随时欢迎，技术交流也热烈欢迎！
+                </p>
+            </div>
+        </div>
     );
 };
 

@@ -19,6 +19,7 @@ export default function LinksPage() {
     ];
 
     return (
+        <>
         <div className="links-container">
             <title>关于大佬们</title>
             <header className="links-header">
@@ -53,5 +54,6 @@ export default function LinksPage() {
                 ))}
             </div>
         </div>
+        </>
     );
 }
