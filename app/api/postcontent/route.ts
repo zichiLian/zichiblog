@@ -2,7 +2,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/src/db';
 import { posts, tags, menu } from '@/src/schema';
-import { eq } from 'drizzle-orm';
 
 export async function POST(req: NextRequest) {
     try {

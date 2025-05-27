@@ -1,17 +1,14 @@
 'use client'
 import React from 'react';
-import {Button} from "antd";
 import {useEffect, useState} from 'react'
 
 
 
 export default function darkmode() {
 
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isDarkMode, _setIsDarkMode] = useState(false);
 //设置俩个状态，暗黑模式，和设置暗黑模式
-    const onClick = () => {
-        setIsDarkMode(!isDarkMode);
-    };
+
 
     // 动态更新 CSS 变量
     useEffect(() => {

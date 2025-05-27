@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState, forwardRef} from "react";
 import Quill from "quill";
 import 'quill/dist/quill.snow.css';
-import {ConfigProvider, Space, notification, Button, Modal, FloatButton} from 'antd';
+import {notification, Button, Modal, FloatButton} from 'antd';
 import Posttag from "@/app/components/tags";
 import {useAuth} from "@/app/hooks/useAuth";
 import {useRouter} from "next/navigation";
@@ -55,7 +55,7 @@ interface DrawsProps {
     savetag?: any[]
 }
 
-export default function Draws({savetag}: DrawsProps) {
+export default function Draws(_savetag: DrawsProps) {
     const quillRef = useRef<Quill | null>(null);
     const quilltitle = useRef<HTMLDivElement>(null);
     const [loading, setLoading] = useState(false);

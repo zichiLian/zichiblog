@@ -15,14 +15,12 @@ interface Post {
 
 
 
-// 类型扩展声明
 declare module 'quill' {
     interface Quill {
         root: HTMLElement;
     }
 }
 
-// 定义 Editor 组件 props 类型
 interface EditorProps {
     defaultValue?: Delta;
 }
@@ -104,12 +102,11 @@ const Update = (postid:Postid) => {
         fetchPosts();
     }, [postid, api]);
 
-    // 标签变更处理
     const onTagChange = useCallback((newTags: string[]) => {
         setTags(newTags);
     }, []);
 
-    // 提交处理
+
     const handleClick = useCallback(async () => {
             if (!quillRef.current || !quilltitle.current) {
                 throw new Error('编辑器未正确初始化');

@@ -6,7 +6,7 @@ import { Button, Modal, message } from 'antd';
 
 export default function Login() {
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [_loading, setLoading] = useState(false);
     const router = useRouter();
     const { isAdmin, isLoading } = useAuth();
 

@@ -3,7 +3,7 @@ import { db } from '@/src/db';
 import { posts, menu } from '@/src/schema';
 import { sql } from 'drizzle-orm';
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
     try {
         // 并行查询所有数据
         const [postsData, menuTags, allPosts] = await Promise.all([

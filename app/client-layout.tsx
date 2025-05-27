@@ -25,7 +25,7 @@ export default function ClientLayout({
     const pathname = usePathname();
     const [playerVisible, setPlayerVisible] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
-    const isHomepage = pathname === '/';
+    const isHomepage = pathname === '/' || pathname === '/500' || pathname?.startsWith('/_error') || pathname === '/404'|| pathname === '*  ';
 
     useEffect(() => {
         setIsMounted(true);

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/src/db'
 import { posts } from '@/src/schema'
-import { eq, sql } from 'drizzle-orm'
+import { sql } from 'drizzle-orm'
 
 export async function GET(request: NextRequest) {
     try {
@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
     return NextResponse.json(
         { success: false, message: 'Method not allowed' },
         { status: 405 }

@@ -6,7 +6,6 @@ import {
     text,
     date,
     serial,
-    primaryKey
 } from 'drizzle-orm/mysql-core';
 
 // 标签表
@@ -30,7 +29,7 @@ export const posts = mysqlTable('posts', {
     content: text('content').notNull(),
     lasttime: date('lasttime'),            // DATE类型
     time: date('time'),                    // DATE类型
-}, (table) => ({
+}, (_table) => ({
     // 表级配置（引擎和字符集）
     engine: 'InnoDB',
     charset: 'utf8mb4',

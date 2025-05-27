@@ -43,17 +43,12 @@ export default function Archives() {
 
 
   const [title, setTitle] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  // 安全转换类型为数组
+
 
 
   useEffect(() => {
     const fetchPosts = async () => {
-
-        setLoading(true);
-        setError(null);
 
         const response = await fetch('/api/time');
 

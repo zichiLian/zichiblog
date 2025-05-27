@@ -1,4 +1,3 @@
-// app/api/bilibili/route.ts
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
@@ -32,7 +31,6 @@ export async function GET(request: Request) {
     }
 }
 
-// 处理OPTIONS预检请求
 export async function OPTIONS() {
     return NextResponse.json({}, {
         headers: {

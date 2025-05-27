@@ -17,7 +17,7 @@ interface Tag {
     name: string;
 }
 
-export function Post({ id: postId }: { id: string }) {
+export function Post({ id: postId }: { id: string |string[] | number | undefined }) {
     const auth = useAuth();
     const router = useRouter();
     const [post, setPost] = useState<Post | null>(null);

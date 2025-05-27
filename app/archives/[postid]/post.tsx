@@ -11,7 +11,7 @@ interface Post {
 }
 
 const Post = () => {
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [_posts, setPosts] = useState<Post[]>([]);
     const [groupedPosts, setGroupedPosts] = useState<Record<number, Record<number, Post[]>>>({});
     const [loading, setLoading] = useState(true);
 

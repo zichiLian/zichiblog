@@ -1,4 +1,3 @@
-// app/api/posts/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/src/db';
 import { posts, tags } from '@/src/schema';
@@ -9,7 +8,6 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
         const year = searchParams.get('id');
 
-        // 1. 参数验证
         if (!year || !/^\d{4}$/.test(year)) {
             return NextResponse.json(
                 {
@@ -21,9 +19,9 @@ export async function GET(req: NextRequest) {
             );
         }
 
-        // 2. 并行查询文章和标签
+
         const [postResults, tagResults] = await Promise.all([
-            // 查询文章
+
             db
                 .select({
                     id: posts.id,
@@ -47,7 +45,6 @@ export async function GET(req: NextRequest) {
         ]);
 
 
-        // 3. 返回标准化响应
         return NextResponse.json({
             success: true,
             posts: postResults,
