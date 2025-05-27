@@ -15,8 +15,7 @@
       ]
     },
     "types": [
-      "node",
-      "jest"
+      "node"
     ],
     "strict": true,
     "noImplicitAny": true,
