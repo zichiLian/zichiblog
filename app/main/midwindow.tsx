@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Rightnavbar from "@/app/main/rightnavbar";
+
 
 interface Post {
     id: number;
@@ -89,7 +89,6 @@ export default function Midwindow() {
                 <p className="footer-text">Build by zichi</p>
             </div>
         </div>
-            <Rightnavbar/>
         </>
     );
 }
