@@ -6,7 +6,6 @@ import Links from "@/app/leftside/links";
 import About from "@/app/leftside/about";
 import Archives from "@/app/archives/[postid]/post";
 import Post from "@/app/leftside/categories";
-import Rightnavbar from "@/app/main/rightnavbar";
 
 
 
@@ -31,6 +30,7 @@ export default function TextPage() {
                                 </div>
                                 </div>
                             </>}
+
                             {postid === "About" &&                                 <>
                                 <div className="box">
                                     <div id="fullwindow">
@@ -44,29 +44,24 @@ export default function TextPage() {
                                     </div>
                                 </div>
                             </>}
+
                             {postid === "Archives" &&
-                                <>
                        <div className="box">
                            <div id="fullwindow">
                                <div className="container">
                                 <Archives/>
                                </div>
                            </div>
-                       </div>
-                         <Rightnavbar/>
-                                </>}
+                       </div>}
+
                             {postid === "Categories" &&
-                                <>
                                     <div className="box">
                                         <div id="fullwindow">
                                             <div className="container">
                                                 <Post/>
                                             </div>
                                         </div>
-                                    </div>
-                                    <Rightnavbar/>
-                                </>
-                            }
+                                    </div>}
             </>
 
         )

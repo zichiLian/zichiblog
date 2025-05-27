@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 export default function MetingPlayer() {
     useEffect(() => {
         const loadScripts = async () => {
-            // 动态加载CSS
+
             const css = document.createElement('link')
             css.rel = 'stylesheet'
             css.href = 'https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css'

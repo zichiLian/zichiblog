@@ -81,6 +81,7 @@ export function Post({ id: postId }: { id: string |string[] | number | undefined
 
 
     return (
+        <>
         <div className="box">
             <div id="fullwindow">
                 <div className="container">
@@ -124,5 +125,10 @@ export function Post({ id: postId }: { id: string |string[] | number | undefined
                 <GiscusSimple />
             </div>
         </div>
+            <div className ="link-right-side">
+                <div className="container">
+                </div>
+            </div>
+        </>
     );
 }

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { CustomerServiceOutlined, CloseOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 import Leftnavbar from "@/app/main/leftnavbar";
+import Rightnavbar from "@/app/main/rightnavbar";
 
 
 const MetingPlayer = dynamic(
@@ -26,6 +27,9 @@ export default function ClientLayout({
     const [playerVisible, setPlayerVisible] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
     const isHomepage = pathname === '/' || pathname === '/500' || pathname?.startsWith('/_error') || pathname === '/404'|| pathname === '*  ';
+    const isright =
+        pathname === '/home' || pathname === '/leftside/Archives' || pathname === '/leftside/Categories' ||
+        pathname?.startsWith('/archive') || pathname?.startsWith('/categories') || pathname?.startsWith('/tagspage');
 
     useEffect(() => {
         setIsMounted(true);
@@ -43,12 +47,13 @@ export default function ClientLayout({
         <div style={{ background: "var(--background)" }} className="box">
             {!isHomepage && <Leftnavbar /> }
             {children}
+            {isright && <Rightnavbar /> }
             <Draws/>
             {isMounted && (
                 <div className={`player-container ${playerVisible ? 'visible' : ''}`}>
                     <div className="player-mask" onClick={togglePlayer} />
                     <div className="player-content">
-                        <MetingPlayer />
+                        <MetingPlayer/>
                     </div>
                 </div>
             )}

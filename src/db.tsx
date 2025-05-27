@@ -2,69 +2,45 @@ import mysql from 'mysql2/promise';
 import { drizzle } from 'drizzle-orm/mysql2';
 
 
-function getDbConfig() {
-    return {
-        host: process.env.DB_HOST || 'localhost',
-        port: Number(process.env.DB_PORT) || 3306,
-        user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASSWORD || '',
-        database: process.env.DB_DATABASE || 'myapp',
-        waitForConnections: true,
-        connectionLimit: 15,
-        connectTimeout: 30000,
-        idleTimeout: 10000,
-        queueLimit: 0,
-        timezone: '+08:00',
-        charset: 'utf8mb4_unicode_ci'
-    };
-}
-
-const pool = mysql.createPool(getDbConfig());
-
-let retryCount = 0;
-const MAX_RETRIES = 3;
-
-async function testConnection() {
-    try {
-        const conn = await pool.getConnection();
-        console.log('✅ 数据库连接成功');
-        conn.release();
-        return true;
-    } catch (err) {
-        console.error('❌ 数据库连接失败:', (err as Error).message);
-
-        if (retryCount < MAX_RETRIES) {
-            retryCount++;
-            console.log(`⏳ 尝试重连 (${retryCount}/${MAX_RETRIES})...`);
-            await new Promise(resolve => setTimeout(resolve, 5000));
-            return testConnection();
-        }
-
-        throw new Error('数据库连接失败，已达到最大重试次数');
-    }
-}
-
-
-testConnection().catch(err => {
-    console.error('数据库初始化错误:', err.message);
+const pool = mysql.createPool({
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_DATABASE || 'myapp',
+    waitForConnections: true,
+    connectionLimit: 10,
+    connectTimeout: 30000,
+    idleTimeout: 60000,
+    timezone: '+08:00',
+    charset: 'utf8mb4_unicode_ci'
 });
 
 
-export const mysqlPool = pool;
-
-
-export const db = drizzle(pool);
-
-
-export async function closePool() {
+export async function withConnection<T>(fn: (conn: mysql.PoolConnection) => Promise<T>): Promise<T> {
+    const conn = await pool.getConnection();
     try {
-        await pool.end();
-        console.log('数据库连接池已关闭');
-    } catch (err) {
-        console.error('关闭连接池时出错:', (err as Error).message);
+        const result = await fn(conn);
+        return result;
+    } finally {
+        conn.release(); // 确保无论如何都会释放连接
     }
 }
 
 
-process.on('SIGTERM', closePool);
-process.on('SIGINT', closePool);
+export const db = drizzle(pool, {
+    logger: true,
+    mode: 'default'
+});
+
+
+export async function safeQuery<T>(query: Promise<T>): Promise<T> {
+    return withConnection(async () => {
+        try {
+            return await query;
+        } catch (err) {
+            console.error('查询失败:', err);
+            throw err;
+        }
+    });
+}
+

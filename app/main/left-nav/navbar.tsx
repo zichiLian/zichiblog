@@ -11,9 +11,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
     { id: 0, name: "Home", svg: "home.svg" },
-    { id: 1, name: "Links", svg: "links.svg" },
-    { id: 2, name: "Archives", svg: "archives.svg" },
-    { id: 3, name: "Categories", svg: "cate.svg" },
+    { id: 1, name: "Archives", svg: "archives.svg" },
+    { id: 2, name: "Categories", svg: "cate.svg" },
+    { id: 3, name: "Links", svg: "links.svg" },
     { id: 4, name: "About", svg: "about.svg" },
 ]
 
