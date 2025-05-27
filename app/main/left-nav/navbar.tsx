@@ -14,8 +14,7 @@ const navItems: NavItem[] = [
     { id: 1, name: "Links", svg: "links.svg" },
     { id: 2, name: "Archives", svg: "archives.svg" },
     { id: 3, name: "Categories", svg: "cate.svg" },
-    { id: 4, name: "RSS", svg: "rss.svg" },
-    { id: 5, name: "About", svg: "about.svg" },
+    { id: 4, name: "About", svg: "about.svg" },
 ]
 
 export default function Navbar() {

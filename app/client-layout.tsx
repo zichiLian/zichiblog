@@ -4,11 +4,6 @@ import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { CustomerServiceOutlined, CloseOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
-// @ts-ignore
-import LandingPopup from '@/app/components/langdingpopup'
-// @ts-ignore
-import Rightnavbar from "@/app/main/rightnavbar";
-// @ts-ignore
 import Leftnavbar from "@/app/main/leftnavbar";
 
 
@@ -49,6 +44,14 @@ export default function ClientLayout({
             {!isHomepage && <Leftnavbar /> }
             {children}
             <Draws/>
+            {isMounted && (
+                <div className={`player-container ${playerVisible ? 'visible' : ''}`}>
+                    <div className="player-mask" onClick={togglePlayer} />
+                    <div className="player-content">
+                        <MetingPlayer />
+                    </div>
+                </div>
+            )}
 
             <div className='antButton'>
                 <FloatButton
@@ -65,14 +68,6 @@ export default function ClientLayout({
                 />
             </div>
 
-            {isMounted && (
-                <div className={`player-container ${playerVisible ? 'visible' : ''}`}>
-                    <div className="player-mask" onClick={togglePlayer} />
-                    <div className="player-content">
-                        <MetingPlayer />
-                    </div>
-                </div>
-            )}
         </div>
 
     );

@@ -12,8 +12,8 @@ export default function Home() {
                 <div className="max-w-4xl mx-auto flex justify-between items-center">
                     <div className="space-x-6">
                         <Link href='/home'>首页</Link>
-                        <Link href="/about" className="text-gray-600 hover:text-black">关于</Link>
-                        <Link href="/Link" className="text-gray-600 hover:text-black">友链</Link>
+                        <Link href="/leftside/About" className="text-gray-600 hover:text-black">关于</Link>
+                        <Link href="/leftside/Links" className="text-gray-600 hover:text-black">友链</Link>
                     </div>
                 </div>
             </nav>
