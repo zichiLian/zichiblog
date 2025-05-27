@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/src/db';
-import { posts, tags, cate, menu } from '@/src/schema';
+import { posts, tags,  menu } from '@/src/schema';
 import { eq } from 'drizzle-orm';
 
 export async function POST(req: NextRequest) {
@@ -30,14 +30,11 @@ export async function POST(req: NextRequest) {
             db
             .delete(posts)
             .where(eq(posts.id, postId));
-
-
-        const tag = await
+        await
             db
                 .delete(tags)
                 .where(eq(tags.id, postId));
-
-        const categ = await
+          await
             db
                 .delete(menu)
                 .where(eq(menu.id, postId));
