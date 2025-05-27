@@ -1,7 +1,6 @@
 'use client'
 
 import React, {useEffect, useState} from 'react'
-import Link from 'next/link';
 
 interface BilibiliData {
     mid: number;
@@ -22,7 +21,6 @@ export default function Notice({userId = 24442474}) {
 
     const [data, setData] = useState<BilibiliData | null>(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,7 +50,6 @@ export default function Notice({userId = 24442474}) {
     }, [userId]);
 
     if (loading) return <div>加载中...</div>;
-    if (error) return <div>错误: {error}</div>;
     if (!data) return <div>未获取到数据</div>;
 
     return (

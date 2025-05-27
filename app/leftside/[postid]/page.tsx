@@ -6,7 +6,6 @@ import Links from "@/app/leftside/links";
 import About from "@/app/leftside/about";
 import Archives from "@/app/archives/[postid]/post";
 import Post from "@/app/leftside/categories";
-import Rss from "@/app/leftside/rss";
 import Rightnavbar from "@/app/main/rightnavbar";
 
 
@@ -68,7 +67,6 @@ export default function TextPage() {
                                     <Rightnavbar/>
                                 </>
                             }
-                            {postid === "RSS" && <Rss/>}
             </>
 
         )
