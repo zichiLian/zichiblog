@@ -1,24 +1,24 @@
 import Link from "next/link";
 
 
-
 export default function Home() {
+
 
     return (
 
-        <div className="home-box min-h-screen bg-white">
+        <div className="home-box min-h-screen " style={{
+            gap:'0px'
+        }}>
             {/* 顶部导航 */}
-            <nav className="px-6 py-4 border-b border-gray-100">
+            <nav className="px-6 py-4 border-b border-gray-200">
                 <div className="max-w-4xl mx-auto flex justify-between items-center">
                     <div className="space-x-6">
-                        <Link href='/home'>首页</Link>
+                        <Link href='/home' className="text-gray-600 hover:text-black" >首页</Link>
                         <Link href="/leftside/About" className="text-gray-600 hover:text-black">关于</Link>
                         <Link href="/leftside/Links" className="text-gray-600 hover:text-black">友链</Link>
                     </div>
                 </div>
             </nav>
-
-            {/* 主内容区 */}
             <main className="max-w-4xl mx-auto px-6 py-16">
                 <section className="mb-24">
                   <span className="My-name ">怪猫</span>
