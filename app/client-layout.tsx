@@ -26,10 +26,10 @@ export default function ClientLayout({
     const pathname = usePathname();
     const [playerVisible, setPlayerVisible] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
-    const isHomepage = pathname === '/' || pathname === '/500' || pathname?.startsWith('/_error') || pathname === '/404'|| pathname === '*  ';
     const isright =
         pathname === '/home' || pathname === '/leftside/Archives' || pathname === '/leftside/Categories' ||
         pathname?.startsWith('/archive') || pathname?.startsWith('/categories') || pathname?.startsWith('/tagspage');
+
 
     useEffect(() => {
         setIsMounted(true);
@@ -43,9 +43,13 @@ export default function ClientLayout({
         return <div className="error-layout">{children}</div>;
     }
 
+    if (pathname === '/') {
+        return <div>{children}</div>;
+    }
+
     return (
-        <div style={{ background: "var(--background)" }} className="box">
-            {!isHomepage && <Leftnavbar /> }
+         <div style={{ background: "var(--background)" }} className="box">
+           <Leftnavbar />
             {children}
             {isright && <Rightnavbar /> }
             <Draws/>

@@ -10,7 +10,7 @@ export default function Leftnavbar() {
 
 
   return (
-      <div className = "left-side sticky">
+      <div className = "left-side">
     <div className="container">
      <Userinfo/>
     <Navbar/>

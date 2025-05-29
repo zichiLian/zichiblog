@@ -82,10 +82,9 @@ export default function Midwindow() {
                 ))}
             </div>
 
-            <div className="page"><span>1</span></div>
-            <div className="footer">
+            <div className="post-footer">
                 <h1 className="footer-title">2024-2025 怪猫的博客</h1>
-                <p className="footer-text">Icons form Google's icons</p>
+                <p className="footer-text">Icons from Google's icons</p>
                 <p className="footer-text">Build by zichi</p>
             </div>
         </div>
